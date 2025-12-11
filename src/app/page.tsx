@@ -178,21 +178,21 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-scale-in" style={{ animationDelay: '0.3s' }}>
             <Button
               size="lg"
-              className="btn-animate w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 bg-white text-black hover:bg-white/90 shadow-xl hover:shadow-2xl transition-all hover:scale-105 mobile-scale"
-              onClick={() => router.push('/login')}>
+              variant="outline"
+              className="btn-animate w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 border-2 border-sky-400 text-sky-400 bg-transparent hover:bg-sky-400 hover:text-white shadow-xl hover:shadow-2xl hover:shadow-sky-400/30 transition-all duration-300 hover:scale-105 mobile-scale backdrop-blur-sm"
+              onClick={() => router.push('/register')}>
 
               <GraduationCap className="w-5 h-5 ml-2" />
-              سجل دخولك
+              انضم معنا
             </Button>
             
             <Button
               size="lg"
-              variant="outline"
-              className="btn-animate w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 border-2 border-white text-white hover:bg-white/20 shadow-xl hover:shadow-2xl transition-all hover:scale-105 mobile-scale backdrop-blur-sm"
-              onClick={() => router.push('/register')}>
+              className="btn-animate w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 bg-white text-black hover:bg-white/90 shadow-xl hover:shadow-2xl transition-all hover:scale-105 mobile-scale"
+              onClick={() => router.push('/login')}>
 
               <Users className="w-5 h-5 ml-2" />
-              انضم معنا
+              سجل دخولك
             </Button>
           </div>
 
