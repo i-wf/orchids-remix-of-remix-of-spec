@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ArrowRight, User, Phone, GraduationCap, Save, Loader2, Lock, Camera, Upload } from 'lucide-react';
+import { ArrowRight, User, Phone, GraduationCap, Save, Loader2, Lock, Camera, Upload, LogOut } from 'lucide-react';
 import { toast } from 'sonner';
 import {
   Select,
@@ -34,7 +34,7 @@ const GRADES = [
 ];
 
 export function StudentSettings({ onBack }: StudentSettingsProps) {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [name, setName] = useState(user?.name || '');
   const [phone, setPhone] = useState(user?.phone || '');
   const [grade, setGrade] = useState(user?.grade || '');
@@ -154,7 +154,7 @@ export function StudentSettings({ onBack }: StudentSettingsProps) {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-24 md:pb-0">
       {/* Header */}
       <header className="bg-card border-b border-border px-4 sm:px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -170,7 +170,7 @@ export function StudentSettings({ onBack }: StudentSettingsProps) {
       {/* Main Content */}
       <main className="max-w-2xl mx-auto p-4 sm:p-6 space-y-6">
         {/* Profile Image Section */}
-        <Card className="p-4 sm:p-6">
+        <Card className="p-4 sm:p-6 rounded-2xl">
           <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-6">الصورة الشخصية</h2>
           
           <div className="flex flex-col items-center gap-4">
@@ -216,7 +216,7 @@ export function StudentSettings({ onBack }: StudentSettingsProps) {
         </Card>
 
         {/* Personal Info */}
-        <Card className="p-4 sm:p-6">
+        <Card className="p-4 sm:p-6 rounded-2xl">
           <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-6">المعلومات الشخصية</h2>
 
           <div className="space-y-6">
@@ -291,7 +291,7 @@ export function StudentSettings({ onBack }: StudentSettingsProps) {
         </Card>
 
         {/* Change Password */}
-        <Card className="p-4 sm:p-6">
+        <Card className="p-4 sm:p-6 rounded-2xl">
           <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-6">تغيير كلمة المرور</h2>
 
           <div className="space-y-6">
@@ -366,6 +366,22 @@ export function StudentSettings({ onBack }: StudentSettingsProps) {
               )}
             </Button>
           </div>
+        </Card>
+
+        {/* Sign Out Section */}
+        <Card className="p-4 sm:p-6 rounded-2xl border-red-500/20">
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-4">تسجيل الخروج</h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            سيتم تسجيل خروجك من حسابك على هذا الجهاز
+          </p>
+          <Button 
+            onClick={logout}
+            variant="destructive"
+            className="w-full rounded-xl"
+          >
+            <LogOut className="w-4 h-4 ml-2" />
+            تسجيل الخروج
+          </Button>
         </Card>
       </main>
     </div>
