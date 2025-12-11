@@ -189,16 +189,16 @@ export function Navbar() {
               <div className={`grid ${user ? 'grid-cols-3' : 'grid-cols-3'} gap-1 px-2 py-2`}>
                 {user && (
                   <button
-                    onClick={() => handleNavClick('/dashboard', 1)}
+                    onClick={() => router.push('/dashboard')}
                     className={`mobile-nav-item flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all duration-300 ${
-                      pathname === '/dashboard'
+                      pathname === '/dashboard' && !searchParams?.get('view')
                         ? 'active bg-primary/15 text-primary shadow-lg shadow-primary/20'
                         : 'text-white/70 hover:text-white hover:bg-white/10'
                     }`}>
                     <div className={`p-1.5 rounded-full transition-all duration-300 ${
-                      pathname === '/dashboard' ? 'bg-primary/20 shadow-lg shadow-primary/30' : 'bg-transparent'
+                      pathname === '/dashboard' && !searchParams?.get('view') ? 'bg-primary/20 shadow-lg shadow-primary/30' : 'bg-transparent'
                     }`}>
-                      <LayoutDashboard className={`w-5 h-5 transition-transform duration-300 ${pathname === '/dashboard' ? 'scale-110' : ''}`} />
+                      <LayoutDashboard className={`w-5 h-5 transition-transform duration-300 ${pathname === '/dashboard' && !searchParams?.get('view') ? 'scale-110' : ''}`} />
                     </div>
                     <span className="text-[10px] font-medium">التحكم</span>
                   </button>
@@ -208,9 +208,15 @@ export function Navbar() {
                     <>
                       <button
                         onClick={handleProfileClick}
-                        className="mobile-nav-item flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all duration-300 text-white/70 hover:text-white hover:bg-white/10">
-                        <div className="p-1.5 rounded-full bg-transparent relative">
-                          <UserCircle className="w-5 h-5" />
+                        className={`mobile-nav-item flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all duration-300 ${
+                          searchParams?.get('view') === 'profile'
+                            ? 'active bg-primary/15 text-primary shadow-lg shadow-primary/20'
+                            : 'text-white/70 hover:text-white hover:bg-white/10'
+                        }`}>
+                        <div className={`p-1.5 rounded-full relative transition-all duration-300 ${
+                          searchParams?.get('view') === 'profile' ? 'bg-primary/20 shadow-lg shadow-primary/30' : 'bg-transparent'
+                        }`}>
+                          <UserCircle className={`w-5 h-5 transition-transform duration-300 ${searchParams?.get('view') === 'profile' ? 'scale-110' : ''}`} />
                           {hasSubscription && (
                             <Crown className="w-3 h-3 text-yellow-500 absolute -top-1 -right-1 subscriber-badge" />
                           )}
@@ -220,9 +226,15 @@ export function Navbar() {
 
                       <button
                         onClick={handleSettingsClick}
-                        className="mobile-nav-item flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all duration-300 text-white/70 hover:text-white hover:bg-white/10">
-                        <div className="p-1.5 rounded-full bg-transparent">
-                          <Settings className="w-5 h-5" />
+                        className={`mobile-nav-item flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all duration-300 ${
+                          searchParams?.get('view') === 'settings'
+                            ? 'active bg-primary/15 text-primary shadow-lg shadow-primary/20'
+                            : 'text-white/70 hover:text-white hover:bg-white/10'
+                        }`}>
+                        <div className={`p-1.5 rounded-full transition-all duration-300 ${
+                          searchParams?.get('view') === 'settings' ? 'bg-primary/20 shadow-lg shadow-primary/30' : 'bg-transparent'
+                        }`}>
+                          <Settings className={`w-5 h-5 transition-transform duration-300 ${searchParams?.get('view') === 'settings' ? 'scale-110' : ''}`} />
                         </div>
                         <span className="text-[10px] font-medium">الإعدادات</span>
                       </button>
