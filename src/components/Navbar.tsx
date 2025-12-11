@@ -1,13 +1,13 @@
 "use client";
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { GraduationCap, LogOut, Home, User, Settings, LayoutDashboard, Crown, UserCircle, ChevronUp, BookOpen, Users, Building2, BarChart3 } from 'lucide-react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 
-export function Navbar() {
+function NavbarContent() {
   const { user, logout } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
@@ -16,6 +16,8 @@ export function Navbar() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const profileMenuRef = useRef<HTMLDivElement>(null);
+  
+  const currentView = searchParams.get('view');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -192,14 +194,14 @@ export function Navbar() {
                   <button
                     onClick={() => router.push('/dashboard')}
                     className={`mobile-nav-item flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all duration-300 ${
-                      pathname === '/dashboard' && !searchParams?.get('view')
+                      pathname === '/dashboard' && !currentView
                         ? 'active bg-primary/15 text-primary shadow-lg shadow-primary/20'
                         : 'text-white/70 hover:text-white hover:bg-white/10'
                     }`}>
                     <div className={`p-1.5 rounded-full transition-all duration-300 ${
-                      pathname === '/dashboard' && !searchParams?.get('view') ? 'bg-primary/20 shadow-lg shadow-primary/30' : 'bg-transparent'
+                      pathname === '/dashboard' && !currentView ? 'bg-primary/20 shadow-lg shadow-primary/30' : 'bg-transparent'
                     }`}>
-                      <LayoutDashboard className={`w-5 h-5 transition-transform duration-300 ${pathname === '/dashboard' && !searchParams?.get('view') ? 'scale-110' : ''}`} />
+                      <LayoutDashboard className={`w-5 h-5 transition-transform duration-300 ${pathname === '/dashboard' && !currentView ? 'scale-110' : ''}`} />
                     </div>
                     <span className="text-[10px] font-medium">التحكم</span>
                   </button>
@@ -210,14 +212,14 @@ export function Navbar() {
                       <button
                         onClick={handleProfileClick}
                         className={`mobile-nav-item flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all duration-300 ${
-                          searchParams?.get('view') === 'profile'
+                          currentView === 'profile'
                             ? 'active bg-primary/15 text-primary shadow-lg shadow-primary/20'
                             : 'text-white/70 hover:text-white hover:bg-white/10'
                         }`}>
                         <div className={`p-1.5 rounded-full relative transition-all duration-300 ${
-                          searchParams?.get('view') === 'profile' ? 'bg-primary/20 shadow-lg shadow-primary/30' : 'bg-transparent'
+                          currentView === 'profile' ? 'bg-primary/20 shadow-lg shadow-primary/30' : 'bg-transparent'
                         }`}>
-                          <UserCircle className={`w-5 h-5 transition-transform duration-300 ${searchParams?.get('view') === 'profile' ? 'scale-110' : ''}`} />
+                          <UserCircle className={`w-5 h-5 transition-transform duration-300 ${currentView === 'profile' ? 'scale-110' : ''}`} />
                           {hasSubscription && (
                             <Crown className="w-3 h-3 text-yellow-500 absolute -top-1 -right-1 subscriber-badge" />
                           )}
@@ -228,14 +230,14 @@ export function Navbar() {
                       <button
                         onClick={handleSettingsClick}
                         className={`mobile-nav-item flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all duration-300 ${
-                          searchParams?.get('view') === 'settings'
+                          currentView === 'settings'
                             ? 'active bg-primary/15 text-primary shadow-lg shadow-primary/20'
                             : 'text-white/70 hover:text-white hover:bg-white/10'
                         }`}>
                         <div className={`p-1.5 rounded-full transition-all duration-300 ${
-                          searchParams?.get('view') === 'settings' ? 'bg-primary/20 shadow-lg shadow-primary/30' : 'bg-transparent'
+                          currentView === 'settings' ? 'bg-primary/20 shadow-lg shadow-primary/30' : 'bg-transparent'
                         }`}>
-                          <Settings className={`w-5 h-5 transition-transform duration-300 ${searchParams?.get('view') === 'settings' ? 'scale-110' : ''}`} />
+                          <Settings className={`w-5 h-5 transition-transform duration-300 ${currentView === 'settings' ? 'scale-110' : ''}`} />
                         </div>
                         <span className="text-[10px] font-medium">الإعدادات</span>
                       </button>
@@ -282,5 +284,21 @@ export function Navbar() {
 
       {!isHomePage && <div className="md:hidden h-20" />}
     </>
+  );
+}
+
+export function Navbar() {
+  return (
+    <Suspense fallback={
+      <nav className="hidden md:block fixed top-0 left-0 right-0 z-50 bg-transparent h-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="w-10 h-10 rounded-full bg-primary/20 animate-pulse" />
+          </div>
+        </div>
+      </nav>
+    }>
+      <NavbarContent />
+    </Suspense>
   );
 }
