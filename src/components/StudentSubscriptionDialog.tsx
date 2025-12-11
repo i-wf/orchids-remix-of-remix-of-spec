@@ -199,15 +199,15 @@ export function StudentSubscriptionDialog({ isOpen, onClose, studentId, studentG
   if (showPayment && selectedFolderForPayment) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
+        <DialogContent className="w-[95vw] max-w-2xl max-h-[85vh] overflow-hidden flex flex-col p-4 sm:p-6 rounded-2xl">
           <DialogHeader>
-            <DialogTitle className="text-right">الدفع والاشتراك</DialogTitle>
+            <DialogTitle className="text-right text-base sm:text-lg">الدفع والاشتراك</DialogTitle>
           </DialogHeader>
 
-          <div className="flex-1 overflow-y-auto space-y-4">
-            <div className="bg-accent/20 p-4 rounded-lg border border-border">
-              <h3 className="font-semibold text-foreground mb-2">المادة المختارة</h3>
-              <p className="text-sm text-muted-foreground">{selectedFolderForPayment.name}</p>
+          <div className="flex-1 overflow-y-auto space-y-4 -mx-4 px-4 sm:-mx-6 sm:px-6">
+            <div className="bg-accent/20 p-3 sm:p-4 rounded-xl border border-border">
+              <h3 className="font-semibold text-foreground mb-2 text-sm sm:text-base">المادة المختارة</h3>
+              <p className="text-xs sm:text-sm text-muted-foreground">{selectedFolderForPayment.name}</p>
               <p className="text-xs text-muted-foreground">{getGradeLabel(selectedFolderForPayment.grade)}</p>
             </div>
 
@@ -220,11 +220,11 @@ export function StudentSubscriptionDialog({ isOpen, onClose, studentId, studentG
             />
           </div>
 
-          <div className="flex justify-between pt-4 border-t border-border">
-            <Button variant="outline" onClick={() => setShowPayment(false)}>
+          <div className="flex flex-col-reverse sm:flex-row justify-between gap-2 pt-4 border-t border-border">
+            <Button variant="outline" onClick={() => setShowPayment(false)} className="rounded-xl">
               رجوع
             </Button>
-            <Button variant="outline" onClick={onClose}>
+            <Button variant="outline" onClick={onClose} className="rounded-xl">
               إغلاق
             </Button>
           </div>
@@ -235,71 +235,71 @@ export function StudentSubscriptionDialog({ isOpen, onClose, studentId, studentG
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+      <DialogContent className="w-[95vw] max-w-4xl max-h-[85vh] overflow-hidden flex flex-col p-4 sm:p-6 rounded-2xl">
         <DialogHeader>
-          <DialogTitle className="text-right">الاشتراك في المواد</DialogTitle>
+          <DialogTitle className="text-right text-base sm:text-lg">الاشتراك في المواد</DialogTitle>
         </DialogHeader>
 
         {/* Search */}
         <div className="relative">
-          <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+          <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground" />
           <Input
             type="text"
             placeholder="ابحث عن مادة..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pr-10 text-right"
+            className="pr-10 text-right rounded-xl text-sm sm:text-base"
           />
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto -mx-4 px-4 sm:-mx-6 sm:px-6">
           {loading ? (
             <div className="flex items-center justify-center py-20">
               <Loader2 className="w-8 h-8 animate-spin text-primary" />
             </div>
           ) : filteredFolders.length === 0 ? (
             <div className="text-center py-12">
-              <FolderOpen className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">
+              <FolderOpen className="w-12 h-12 sm:w-16 sm:h-16 text-muted-foreground mx-auto mb-4" />
+              <p className="text-muted-foreground text-sm sm:text-base">
                 {searchQuery ? 'لم يتم العثور على مواد مطابقة' : 'لا توجد مواد متاحة'}
               </p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {filteredFolders.map((folder) => {
                 const teacherInfo = teachersInfo.get(folder.teacherId);
                 const subscribed = isSubscribed(folder.id);
                 const subjectsArray = teacherInfo?.subjects ? teacherInfo.subjects.split(',').map(s => s.trim()) : [];
 
                 return (
-                  <Card key={folder.id} className={`p-4 ${subscribed ? 'border-primary bg-primary/5' : ''}`}>
-                    <div className="flex items-start justify-between gap-4">
+                  <Card key={folder.id} className={`p-3 sm:p-4 rounded-xl ${subscribed ? 'border-primary bg-primary/5' : ''}`}>
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
                       <div className="flex-1">
-                        <div className="flex items-start gap-3 mb-3">
-                          <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                            <FolderOpen className="w-6 h-6 text-primary" />
+                        <div className="flex items-start gap-2 sm:gap-3 mb-2 sm:mb-3">
+                          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                            <FolderOpen className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                           </div>
-                          <div className="flex-1">
-                            <h3 className="text-lg font-bold text-foreground">{folder.name}</h3>
-                            <p className="text-sm text-muted-foreground">{getGradeLabel(folder.grade)}</p>
+                          <div className="flex-1 min-w-0">
+                            <h3 className="text-sm sm:text-lg font-bold text-foreground truncate">{folder.name}</h3>
+                            <p className="text-xs sm:text-sm text-muted-foreground">{getGradeLabel(folder.grade)}</p>
                           </div>
                         </div>
 
                         {/* Teacher Info */}
                         {teacherInfo && (
-                          <div className="space-y-2 mr-15">
-                            <div className="flex items-center gap-2 text-sm">
-                              <User className="w-4 h-4 text-primary flex-shrink-0" />
+                          <div className="space-y-1.5 sm:space-y-2 mr-0 sm:mr-15">
+                            <div className="flex items-center gap-2 text-xs sm:text-sm">
+                              <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary flex-shrink-0" />
                               <span className="text-foreground font-medium">{teacherInfo.name}</span>
                             </div>
 
                             {subjectsArray.length > 0 && (
-                              <div className="flex flex-wrap gap-2">
-                                {subjectsArray.map((subject, index) => (
+                              <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                                {subjectsArray.slice(0, 2).map((subject, index) => (
                                   <span
                                     key={index}
-                                    className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full border border-primary/20"
+                                    className="px-1.5 py-0.5 sm:px-2 sm:py-1 bg-primary/10 text-primary text-[10px] sm:text-xs rounded-full border border-primary/20"
                                   >
                                     {subject}
                                   </span>
@@ -308,12 +308,12 @@ export function StudentSubscriptionDialog({ isOpen, onClose, studentId, studentG
                             )}
 
                             {teacherInfo.totalRatings! > 0 && (
-                              <div className="flex items-center gap-2">
-                                <div className="flex items-center gap-1">
+                              <div className="flex items-center gap-1.5 sm:gap-2">
+                                <div className="flex items-center gap-0.5">
                                   {[1, 2, 3, 4, 5].map((star) => (
                                     <Star
                                       key={star}
-                                      className={`w-4 h-4 ${
+                                      className={`w-3 h-3 sm:w-4 sm:h-4 ${
                                         star <= Math.round(teacherInfo.averageRating!)
                                           ? 'fill-yellow-500 text-yellow-500'
                                           : 'text-muted-foreground'
@@ -321,8 +321,8 @@ export function StudentSubscriptionDialog({ isOpen, onClose, studentId, studentG
                                     />
                                   ))}
                                 </div>
-                                <span className="text-sm text-muted-foreground">
-                                  ({teacherInfo.averageRating!.toFixed(1)} • {teacherInfo.totalRatings} تقييم)
+                                <span className="text-[10px] sm:text-sm text-muted-foreground">
+                                  ({teacherInfo.averageRating!.toFixed(1)})
                                 </span>
                               </div>
                             )}
@@ -330,13 +330,14 @@ export function StudentSubscriptionDialog({ isOpen, onClose, studentId, studentG
                         )}
                       </div>
 
-                      <div className="flex-shrink-0">
+                      <div className="flex-shrink-0 w-full sm:w-auto">
                         {subscribed ? (
                           <Button
                             variant="outline"
                             size="sm"
                             onClick={() => handleUnsubscribe(folder.id)}
                             disabled={actionLoading === folder.id}
+                            className="w-full sm:w-auto rounded-xl"
                           >
                             {actionLoading === folder.id ? (
                               <Loader2 className="w-4 h-4 animate-spin" />
@@ -352,14 +353,14 @@ export function StudentSubscriptionDialog({ isOpen, onClose, studentId, studentG
                             size="sm"
                             onClick={() => handleSubscribe(folder.id)}
                             disabled={actionLoading === folder.id}
-                            className="gap-2"
+                            className="w-full sm:w-auto gap-2 rounded-xl"
                           >
                             {actionLoading === folder.id ? (
                               <Loader2 className="w-4 h-4 animate-spin" />
                             ) : (
                               <>
                                 <CreditCard className="w-4 h-4" />
-                                اشترك الآن ({paymentAmount} جنيه)
+                                اشترك ({paymentAmount} جنيه)
                               </>
                             )}
                           </Button>
@@ -375,7 +376,7 @@ export function StudentSubscriptionDialog({ isOpen, onClose, studentId, studentG
 
         {/* Footer */}
         <div className="flex justify-end pt-4 border-t border-border">
-          <Button variant="outline" onClick={onClose}>
+          <Button variant="outline" onClick={onClose} className="rounded-xl">
             إغلاق
           </Button>
         </div>
