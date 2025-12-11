@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -73,6 +73,7 @@ const SUBJECTS_BY_GRADE: Record<string, string[]> = {
 export function StudentDashboard() {
   const { user } = useAuth();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [folders, setFolders] = useState<Folder[]>([]);
   const [filteredFolders, setFilteredFolders] = useState<Folder[]>([]);
   const [teachersInfo, setTeachersInfo] = useState<Map<number, TeacherInfo>>(new Map());
@@ -80,6 +81,7 @@ export function StudentDashboard() {
   const [loading, setLoading] = useState(true);
   const [selectedFolder, setSelectedFolder] = useState<Folder | null>(null);
   const [showSettings, setShowSettings] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
   const [showSubscription, setShowSubscription] = useState(false);
   const [showStats, setShowStats] = useState(false);
   const [activeTab, setActiveTab] = useState('folders');
@@ -89,9 +91,25 @@ export function StudentDashboard() {
   const [liveSessions, setLiveSessions] = useState<LiveSession[]>([]);
   const [joiningSession, setJoiningSession] = useState<number | null>(null);
 
+  // Handle URL search params for view switching
   useEffect(() => {
-    if (searchParams.get('view') === 'stats') {
+    const view = searchParams.get('view');
+    if (view === 'stats') {
       setShowStats(true);
+      setShowSettings(false);
+      setShowProfile(false);
+    } else if (view === 'settings') {
+      setShowSettings(true);
+      setShowStats(false);
+      setShowProfile(false);
+    } else if (view === 'profile') {
+      setShowProfile(true);
+      setShowStats(false);
+      setShowSettings(false);
+    } else {
+      setShowStats(false);
+      setShowSettings(false);
+      setShowProfile(false);
     }
   }, [searchParams]);
 
@@ -175,35 +193,6 @@ export function StudentDashboard() {
     }
   };
 
-  const handleJoinSession = async (session: LiveSession) => {
-    const isSubscribed = subscriptions.some(s => s.folderId === session.folderId && s.isActive);
-    
-    if (!session.isFree && !isSubscribed) {
-      toast.error('يجب الاشتراك للوصول إلى هذا اللايف');
-      return;
-    }
-
-    setJoiningSession(session.id);
-    
-    try {
-      await fetch('/api/live-attendance', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          liveSessionId: session.id,
-          studentId: user?.id,
-        }),
-      });
-
-      window.parent.postMessage({ type: "OPEN_EXTERNAL_URL", data: { url: session.zoomLink } }, "*");
-      toast.success('تم تسجيل حضورك بنجاح ✓');
-    } catch (error) {
-      console.error('Error joining session:', error);
-    } finally {
-      setJoiningSession(null);
-    }
-  };
-
   const fetchTeachersInfo = async (foldersList: Folder[]) => {
     const teacherIds = [...new Set(foldersList.map(f => f.teacherId))];
     const teachersMap = new Map<number, TeacherInfo>();
@@ -276,16 +265,78 @@ export function StudentDashboard() {
     window.parent.postMessage({ type: "OPEN_EXTERNAL_URL", data: { url: `https://wa.me/?text=${message}` } }, "*");
   };
 
+  const handleJoinSession = async (session: LiveSession) => {
+    const isSubscribed = subscriptions.some(s => s.folderId === session.folderId && s.isActive);
+    
+    if (!session.isFree && !isSubscribed) {
+      toast.error('يجب الاشتراك للوصول إلى هذا اللايف');
+      return;
+    }
+
+    setJoiningSession(session.id);
+    
+    try {
+      await fetch('/api/live-attendance', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          liveSessionId: session.id,
+          studentId: user?.id,
+        }),
+      });
+
+      window.parent.postMessage({ type: "OPEN_EXTERNAL_URL", data: { url: session.zoomLink } }, "*");
+      toast.success('تم تسجيل حضورك بنجاح ✓');
+    } catch (error) {
+      console.error('Error joining session:', error);
+    } finally {
+      setJoiningSession(null);
+    }
+  };
+
   const hasAnySubscription = subscriptions.some(s => s.isActive);
   const uniqueTeachers = Array.from(teachersInfo.values());
   const availableSubjects = user?.grade ? SUBJECTS_BY_GRADE[user.grade] || [] : [];
 
+  const handleBackFromView = () => {
+    router.push('/dashboard');
+  };
+
   if (showStats) {
-    return <StudentStatsPage onBack={() => setShowStats(false)} />;
+    return <StudentStatsPage onBack={handleBackFromView} />;
   }
 
   if (showSettings) {
-    return <StudentSettings onBack={() => setShowSettings(false)} />;
+    return <StudentSettings onBack={handleBackFromView} />;
+  }
+
+  if (showProfile && user) {
+    return (
+      <div className="min-h-screen bg-background pb-24 md:pb-0">
+        <header className="bg-card border-b border-border px-4 sm:px-6 py-4">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <Button variant="ghost" onClick={handleBackFromView}>
+              <span className="ml-2">←</span>
+              رجوع
+            </Button>
+            <h1 className="text-lg sm:text-xl font-bold text-foreground">الملف الشخصي</h1>
+            <div className="w-20" />
+          </div>
+        </header>
+        <main className="max-w-4xl mx-auto p-4 sm:p-6">
+          <StudentProfileView 
+            studentId={user.id} 
+            studentData={{
+              name: user.name,
+              phone: user.phone || '',
+              parentPhone: user.parentPhone,
+              grade: user.grade || '',
+              email: user.email || '',
+            }} 
+          />
+        </main>
+      </div>
+    );
   }
 
   if (selectedFolder) {
@@ -316,14 +367,23 @@ export function StudentDashboard() {
               <p className="text-xs text-muted-foreground">{user?.grade && getGradeLabel(user.grade)}</p>
             </div>
           </div>
-          <div className="flex gap-2">
+          <div className="hidden sm:flex gap-2">
+            <Button variant="outline" size="sm" onClick={() => router.push('/dashboard?view=profile')} className="btn-animate">
+              <UserCircle className="w-4 h-4 sm:ml-2 text-purple-500 icon-colorful" />
+              <span className="hidden sm:inline">الملف</span>
+            </Button>
             <Button variant="outline" size="sm" onClick={() => setShowSubscription(true)} className="btn-animate">
               <CreditCard className="w-4 h-4 sm:ml-2 text-green-500 icon-colorful" />
               <span className="hidden sm:inline">الاشتراك</span>
             </Button>
-            <Button variant="outline" size="sm" onClick={() => setShowSettings(true)} className="btn-animate">
+            <Button variant="outline" size="sm" onClick={() => router.push('/dashboard?view=settings')} className="btn-animate">
               <Settings className="w-4 h-4 sm:ml-2 text-blue-500 icon-colorful" />
               <span className="hidden sm:inline">الإعدادات</span>
+            </Button>
+          </div>
+          <div className="sm:hidden">
+            <Button variant="outline" size="sm" onClick={() => setShowSubscription(true)} className="btn-animate">
+              <CreditCard className="w-4 h-4 text-green-500 icon-colorful" />
             </Button>
           </div>
         </div>
