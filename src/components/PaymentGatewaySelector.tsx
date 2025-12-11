@@ -154,24 +154,24 @@ export function PaymentGatewaySelector({
 
   if (fawryReference) {
     return (
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle className="text-center">رقم الدفع Fawry</CardTitle>
+      <Card className="w-full rounded-2xl">
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="text-center text-base sm:text-lg">رقم الدفع Fawry</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="bg-accent/20 p-6 rounded-lg text-center">
-            <p className="text-sm text-muted-foreground mb-2">رقم المرجع</p>
-            <p className="text-3xl font-bold font-mono text-primary">{fawryReference}</p>
+        <CardContent className="p-4 sm:p-6 pt-0 space-y-4">
+          <div className="bg-accent/20 p-4 sm:p-6 rounded-xl text-center">
+            <p className="text-xs sm:text-sm text-muted-foreground mb-2">رقم المرجع</p>
+            <p className="text-xl sm:text-3xl font-bold font-mono text-primary break-all">{fawryReference}</p>
           </div>
           
-          <div className="space-y-2 text-sm">
+          <div className="space-y-2 text-xs sm:text-sm">
             <p className="font-medium">المبلغ المطلوب: <span className="text-primary">{amount} جنيه</span></p>
             <p className="text-muted-foreground">
               قم بزيارة أقرب فرع Fawry أو استخدم تطبيق Fawry لإتمام الدفع باستخدام هذا الرقم
             </p>
           </div>
 
-          <Button onClick={() => window.print()} className="w-full">
+          <Button onClick={() => window.print()} className="w-full rounded-xl">
             طباعة رقم الدفع
           </Button>
         </CardContent>
@@ -180,40 +180,40 @@ export function PaymentGatewaySelector({
   }
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>اختر طريقة الدفع</CardTitle>
-        <CardDescription>
+    <Card className="w-full rounded-2xl">
+      <CardHeader className="p-4 sm:p-6">
+        <CardTitle className="text-base sm:text-lg">اختر طريقة الدفع</CardTitle>
+        <CardDescription className="text-xs sm:text-sm">
           المبلغ المطلوب: {amount} جنيه مصري
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
+      <CardContent className="p-4 sm:p-6 pt-0">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
           {/* Gateway Selection */}
-          <div className="space-y-3">
-            <Label>بوابة الدفع</Label>
+          <div className="space-y-2 sm:space-y-3">
+            <Label className="text-xs sm:text-sm">بوابة الدفع</Label>
             <RadioGroup value={gateway} onValueChange={(v) => setGateway(v as any)}>
-              <div className="flex items-center space-x-2 space-x-reverse border rounded-lg p-3 hover:bg-accent/50 cursor-pointer">
+              <div className="flex items-center space-x-2 space-x-reverse border rounded-xl p-2.5 sm:p-3 hover:bg-accent/50 cursor-pointer">
                 <RadioGroupItem value="paymob" id="paymob" />
                 <Label htmlFor="paymob" className="flex-1 cursor-pointer">
                   <div className="flex items-center gap-2">
-                    <CreditCard className="w-5 h-5" />
+                    <CreditCard className="w-4 h-4 sm:w-5 sm:h-5" />
                     <div>
-                      <p className="font-medium">PayMob</p>
-                      <p className="text-xs text-muted-foreground">بطاقات ائتمانية، محافظ إلكترونية، Fawry</p>
+                      <p className="font-medium text-xs sm:text-sm">PayMob</p>
+                      <p className="text-[10px] sm:text-xs text-muted-foreground">بطاقات ائتمانية، محافظ إلكترونية</p>
                     </div>
                   </div>
                 </Label>
               </div>
 
-              <div className="flex items-center space-x-2 space-x-reverse border rounded-lg p-3 hover:bg-accent/50 cursor-pointer">
+              <div className="flex items-center space-x-2 space-x-reverse border rounded-xl p-2.5 sm:p-3 hover:bg-accent/50 cursor-pointer">
                 <RadioGroupItem value="fawry" id="fawry" />
                 <Label htmlFor="fawry" className="flex-1 cursor-pointer">
                   <div className="flex items-center gap-2">
-                    <Building2 className="w-5 h-5" />
+                    <Building2 className="w-4 h-4 sm:w-5 sm:h-5" />
                     <div>
-                      <p className="font-medium">Fawry</p>
-                      <p className="text-xs text-muted-foreground">الدفع في فروع Fawry أو بطاقات ائتمانية</p>
+                      <p className="font-medium text-xs sm:text-sm">Fawry</p>
+                      <p className="text-[10px] sm:text-xs text-muted-foreground">الدفع في فروع Fawry</p>
                     </div>
                   </div>
                 </Label>
@@ -223,19 +223,19 @@ export function PaymentGatewaySelector({
 
           {/* Payment Method (Fawry only) */}
           {gateway === 'fawry' && (
-            <div className="space-y-3">
-              <Label>طريقة الدفع</Label>
+            <div className="space-y-2 sm:space-y-3">
+              <Label className="text-xs sm:text-sm">طريقة الدفع</Label>
               <RadioGroup value={paymentMethod} onValueChange={(v) => setPaymentMethod(v as any)}>
-                <div className="flex items-center space-x-2 space-x-reverse border rounded-lg p-3 hover:bg-accent/50 cursor-pointer">
+                <div className="flex items-center space-x-2 space-x-reverse border rounded-xl p-2.5 sm:p-3 hover:bg-accent/50 cursor-pointer">
                   <RadioGroupItem value="fawry_cash" id="fawry_cash" />
-                  <Label htmlFor="fawry_cash" className="flex-1 cursor-pointer">
+                  <Label htmlFor="fawry_cash" className="flex-1 cursor-pointer text-xs sm:text-sm">
                     الدفع نقداً في فروع Fawry
                   </Label>
                 </div>
                 
-                <div className="flex items-center space-x-2 space-x-reverse border rounded-lg p-3 hover:bg-accent/50 cursor-pointer">
+                <div className="flex items-center space-x-2 space-x-reverse border rounded-xl p-2.5 sm:p-3 hover:bg-accent/50 cursor-pointer">
                   <RadioGroupItem value="card" id="card" />
-                  <Label htmlFor="card" className="flex-1 cursor-pointer">
+                  <Label htmlFor="card" className="flex-1 cursor-pointer text-xs sm:text-sm">
                     بطاقة ائتمانية (3D Secure)
                   </Label>
                 </div>
@@ -244,41 +244,44 @@ export function PaymentGatewaySelector({
           )}
 
           {/* Customer Information */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="firstName">الاسم الأول</Label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div className="space-y-1.5 sm:space-y-2">
+              <Label htmlFor="firstName" className="text-xs sm:text-sm">الاسم الأول</Label>
               <Input
                 id="firstName"
                 required
                 value={formData.firstName}
                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                className="rounded-xl text-sm"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="lastName">الاسم الأخير</Label>
+            <div className="space-y-1.5 sm:space-y-2">
+              <Label htmlFor="lastName" className="text-xs sm:text-sm">الاسم الأخير</Label>
               <Input
                 id="lastName"
                 required
                 value={formData.lastName}
                 onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                className="rounded-xl text-sm"
               />
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="email">البريد الإلكتروني</Label>
+          <div className="space-y-1.5 sm:space-y-2">
+            <Label htmlFor="email" className="text-xs sm:text-sm">البريد الإلكتروني</Label>
             <Input
               id="email"
               type="email"
               required
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              className="rounded-xl text-sm"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="phone">رقم الهاتف</Label>
+          <div className="space-y-1.5 sm:space-y-2">
+            <Label htmlFor="phone" className="text-xs sm:text-sm">رقم الهاتف</Label>
             <Input
               id="phone"
               type="tel"
@@ -286,13 +289,14 @@ export function PaymentGatewaySelector({
               required
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              className="rounded-xl text-sm"
             />
-            <p className="text-xs text-muted-foreground">
+            <p className="text-[10px] sm:text-xs text-muted-foreground">
               أدخل الرقم بالصيغة: 201234567890
             </p>
           </div>
 
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button type="submit" className="w-full rounded-xl" disabled={loading}>
             {loading ? (
               <>
                 <Loader2 className="w-4 h-4 ml-2 animate-spin" />
