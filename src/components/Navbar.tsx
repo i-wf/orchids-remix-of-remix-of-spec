@@ -39,10 +39,12 @@ export function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const navLinks = [
-    { href: '/', label: 'الرئيسية', icon: Home, requireAuth: false },
-    { href: '/dashboard', label: 'لوحة التحكم', icon: LayoutDashboard, requireAuth: true }
-  ];
+  const navLinks = user 
+    ? [{ href: '/dashboard', label: 'لوحة التحكم', icon: LayoutDashboard, requireAuth: true }]
+    : [
+        { href: '/', label: 'الرئيسية', icon: Home, requireAuth: false },
+        { href: '/dashboard', label: 'لوحة التحكم', icon: LayoutDashboard, requireAuth: true }
+      ];
 
   const handleNavClick = (href: string, index: number) => {
     setActiveIndex(index);
@@ -54,8 +56,12 @@ export function Navbar() {
     if (user?.role === 'owner') {
       router.push('/admin-portal-secret');
     } else {
-      router.push('/dashboard?view=stats');
+      router.push('/dashboard?view=profile');
     }
+  };
+
+  const handleSettingsClick = () => {
+    router.push('/dashboard?view=settings');
   };
 
   const hasSubscription = user?.subscriptionType && user.subscriptionType !== 'free';
@@ -114,10 +120,10 @@ export function Navbar() {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={logout}
+                    onClick={handleSettingsClick}
                     className="btn-animate bg-transparent border-white/30 text-white hover:bg-white/10 hover:text-white hover:border-white/50 transition-all">
-                    <LogOut className="w-4 h-4 ml-2" />
-                    تسجيل الخروج
+                    <Settings className="w-4 h-4 ml-2" />
+                    الإعدادات
                   </Button>
                 </>
               ) : (
@@ -145,7 +151,7 @@ export function Navbar() {
       {/* Spacer for fixed navbar */}
       <div className="hidden md:block h-16" />
 
-      {/* Mobile Top Navbar - show on all pages including home */}
+      {/* Mobile Top Navbar */}
       <nav className="md:hidden bg-transparent backdrop-blur-sm border-b border-white/10 sticky top-0 z-50">
         <div className="px-4 py-3">
           <div className="flex items-center justify-between">
@@ -180,22 +186,7 @@ export function Navbar() {
         <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 pb-safe">
           <div className="bg-gradient-to-t from-[#1a1a2e]/98 via-[#16213e]/98 to-[#1a1a2e]/95 backdrop-blur-xl border-t border-white/10 shadow-2xl shadow-black/20">
             <div className="relative">
-              <div className="grid grid-cols-4 gap-1 px-2 py-2">
-                <button
-                  onClick={() => handleNavClick('/', 0)}
-                  className={`mobile-nav-item flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all duration-300 ${
-                    pathname === '/'
-                      ? 'active bg-primary/15 text-primary shadow-lg shadow-primary/20'
-                      : 'text-white/70 hover:text-white hover:bg-white/10'
-                  }`}>
-                  <div className={`p-1.5 rounded-full transition-all duration-300 ${
-                    pathname === '/' ? 'bg-primary/20 shadow-lg shadow-primary/30' : 'bg-transparent'
-                  }`}>
-                    <Home className={`w-5 h-5 transition-transform duration-300 ${pathname === '/' ? 'scale-110' : ''}`} />
-                  </div>
-                  <span className="text-[10px] font-medium">الرئيسية</span>
-                </button>
-
+              <div className={`grid ${user ? 'grid-cols-3' : 'grid-cols-3'} gap-1 px-2 py-2`}>
                 {user && (
                   <button
                     onClick={() => handleNavClick('/dashboard', 1)}
@@ -228,16 +219,30 @@ export function Navbar() {
                       </button>
 
                       <button
-                        onClick={logout}
-                        className="mobile-nav-item flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all duration-300 text-white/70 hover:text-red-400 hover:bg-red-500/10">
+                        onClick={handleSettingsClick}
+                        className="mobile-nav-item flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all duration-300 text-white/70 hover:text-white hover:bg-white/10">
                         <div className="p-1.5 rounded-full bg-transparent">
-                          <LogOut className="w-5 h-5" />
+                          <Settings className="w-5 h-5" />
                         </div>
-                        <span className="text-[10px] font-medium">خروج</span>
+                        <span className="text-[10px] font-medium">الإعدادات</span>
                       </button>
                     </>
                   ) : (
                     <>
+                      <button
+                        onClick={() => handleNavClick('/', 0)}
+                        className={`mobile-nav-item flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all duration-300 ${
+                          pathname === '/'
+                            ? 'active bg-primary/15 text-primary shadow-lg shadow-primary/20'
+                            : 'text-white/70 hover:text-white hover:bg-white/10'
+                        }`}>
+                        <div className={`p-1.5 rounded-full transition-all duration-300 ${
+                          pathname === '/' ? 'bg-primary/20 shadow-lg shadow-primary/30' : 'bg-transparent'
+                        }`}>
+                          <Home className={`w-5 h-5 transition-transform duration-300 ${pathname === '/' ? 'scale-110' : ''}`} />
+                        </div>
+                        <span className="text-[10px] font-medium">الرئيسية</span>
+                      </button>
                       <button
                         onClick={() => handleNavClick('/login', -1)}
                         className="mobile-nav-item flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all duration-300 text-white/70 hover:text-primary hover:bg-primary/10">
