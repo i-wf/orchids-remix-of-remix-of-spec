@@ -183,7 +183,7 @@ export default function Home() {
               onClick={() => router.push('/register')}>
 
               <GraduationCap className="w-5 h-5 ml-2" />
-              انضم معنا
+              سجل دخولك
             </Button>
             
             <Button
@@ -192,7 +192,7 @@ export default function Home() {
               onClick={() => router.push('/login')}>
 
               <Users className="w-5 h-5 ml-2" />
-              سجل دخولك
+              انضم معنا
             </Button>
           </div>
 
