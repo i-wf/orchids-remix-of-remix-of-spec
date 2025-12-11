@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { BookOpen, Loader2, Settings, FolderOpen, ClipboardList, Sparkles, Library, Star, User, CreditCard, UserCircle, Building2, Users, Megaphone, Filter, Crown, Key, Video, BarChart3, CheckCircle2, ExternalLink } from 'lucide-react';
+import { BookOpen, Loader2, Settings, FolderOpen, ClipboardList, Sparkles, Library, Star, User, CreditCard, UserCircle, Building2, Users, Filter, Crown, Key, Video, CheckCircle2, ExternalLink, MessageSquare } from 'lucide-react';
 import { StudentFolderView } from './StudentFolderView';
 import { StudentSettings } from './StudentSettings';
 import { StudentSubscriptionDialog } from './StudentSubscriptionDialog';
@@ -85,6 +85,7 @@ export function StudentDashboard() {
   const [activeTab, setActiveTab] = useState('folders');
   const [sortBy, setSortBy] = useState('all');
   const [filterTeacher, setFilterTeacher] = useState('all');
+  const [filterSubject, setFilterSubject] = useState('all');
   const [liveSessions, setLiveSessions] = useState<LiveSession[]>([]);
   const [joiningSession, setJoiningSession] = useState<number | null>(null);
 
@@ -106,6 +107,14 @@ export function StudentDashboard() {
     if (filterTeacher !== 'all') {
       filtered = filtered.filter(f => f.teacherId === parseInt(filterTeacher));
     }
+
+    if (filterSubject !== 'all') {
+      filtered = filtered.filter(f => {
+        const teacherInfo = teachersInfo.get(f.teacherId);
+        if (!teacherInfo?.subjects) return false;
+        return teacherInfo.subjects.toLowerCase().includes(filterSubject.toLowerCase());
+      });
+    }
     
     if (sortBy === 'subject') {
       filtered.sort((a, b) => a.name.localeCompare(b.name, 'ar'));
@@ -124,7 +133,7 @@ export function StudentDashboard() {
     }
     
     setFilteredFolders(filtered);
-  }, [sortBy, filterTeacher, folders, teachersInfo]);
+  }, [sortBy, filterTeacher, filterSubject, folders, teachersInfo]);
 
   const fetchFolders = async () => {
     try {
@@ -257,8 +266,19 @@ export function StudentDashboard() {
     return subscriptions.some(s => s.folderId === folderId && s.isActive);
   };
 
+  const handleWhatsAppClick = (teacherInfo: TeacherInfo, hasSubscription: boolean) => {
+    if (!hasSubscription) {
+      toast.error('يجب الاشتراك أولاً للتواصل مع المعلم');
+      setShowSubscription(true);
+      return;
+    }
+    const message = encodeURIComponent(`مرحباً أستاذ ${teacherInfo.name}، أنا ${user?.name} من منصة التعليم المصرية`);
+    window.parent.postMessage({ type: "OPEN_EXTERNAL_URL", data: { url: `https://wa.me/?text=${message}` } }, "*");
+  };
+
   const hasAnySubscription = subscriptions.some(s => s.isActive);
   const uniqueTeachers = Array.from(teachersInfo.values());
+  const availableSubjects = user?.grade ? SUBJECTS_BY_GRADE[user.grade] || [] : [];
 
   if (showStats) {
     return <StudentStatsPage onBack={() => setShowStats(false)} />;
@@ -280,27 +300,23 @@ export function StudentDashboard() {
 
   return (
     <div className="min-h-screen bg-background pb-24 md:pb-0 page-transition">
-      <header className="bg-card border-b border-border px-4 sm:px-6 py-4">
+      <header className="bg-card border-b border-border px-4 sm:px-6 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center animate-pulse-glow">
-              <BookOpen className="w-5 h-5 text-primary animate-icon-bounce icon-colorful" />
+            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+              <BookOpen className="w-5 h-5 text-primary icon-colorful" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-lg sm:text-xl font-bold text-foreground">{user?.name}</h1>
+                <h1 className="text-base sm:text-lg font-bold text-foreground">{user?.name}</h1>
                 {hasAnySubscription && (
                   <Crown className="w-4 h-4 text-yellow-500 subscriber-badge" />
                 )}
               </div>
-              <p className="text-xs sm:text-sm text-muted-foreground">{user?.grade && getGradeLabel(user.grade)}</p>
+              <p className="text-xs text-muted-foreground">{user?.grade && getGradeLabel(user.grade)}</p>
             </div>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={() => setShowStats(true)} className="btn-animate">
-              <BarChart3 className="w-4 h-4 sm:ml-2 text-cyan-500 icon-colorful" />
-              <span className="hidden sm:inline">إحصائياتي</span>
-            </Button>
             <Button variant="outline" size="sm" onClick={() => setShowSubscription(true)} className="btn-animate">
               <CreditCard className="w-4 h-4 sm:ml-2 text-green-500 icon-colorful" />
               <span className="hidden sm:inline">الاشتراك</span>
@@ -313,52 +329,28 @@ export function StudentDashboard() {
         </div>
       </header>
 
-      {/* Mobile Scrolling Announcement */}
-      <div className="md:hidden bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 border-b border-primary/20 overflow-hidden">
-        <div className="animate-marquee whitespace-nowrap py-2">
-          <span className="text-sm text-foreground/90 font-medium mx-4">
-            🎉 مرحباً بكم في منصة التعليم المصرية • ابدأ رحلتك التعليمية الآن مع أفضل المعلمين 📚
-          </span>
-          <span className="text-sm text-foreground/90 font-medium mx-4">
-            🎉 مرحباً بكم في منصة التعليم المصرية • ابدأ رحلتك التعليمية الآن مع أفضل المعلمين 📚
-          </span>
-        </div>
-      </div>
-
-      <div className="hidden md:block bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 border-b border-primary/20 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
-          <div className="flex items-center gap-3 justify-center animate-slide-in-right">
-            <Megaphone className="w-5 h-5 text-primary flex-shrink-0 animate-bounce-subtle" />
-            <p className="text-sm text-foreground/90 font-medium">
-              🎉 مرحباً بكم في منصة التعليم المصرية • ابدأ رحلتك التعليمية الآن مع أفضل المعلمين
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <main className="max-w-7xl mx-auto p-4 sm:p-6">
-        {/* Live Sessions Section */}
+      <main className="max-w-7xl mx-auto p-3 sm:p-6">
         {liveSessions.length > 0 && (
-          <Card className="p-4 mb-6 bg-gradient-to-r from-red-500/10 to-red-600/5 border-red-500/20">
-            <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
+          <Card className="p-3 sm:p-4 mb-4 bg-gradient-to-r from-red-500/10 to-red-600/5 border-red-500/20 rounded-2xl">
+            <h3 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
               <Video className="w-5 h-5 text-red-500 animate-pulse" />
               حصص لايف قادمة
             </h3>
-            <div className="space-y-3">
+            <div className="space-y-2">
               {liveSessions.slice(0, 3).map((session) => {
                 const isSubscribed = subscriptions.some(s => s.folderId === session.folderId && s.isActive);
                 const canJoin = session.isFree || isSubscribed;
                 
                 return (
-                  <div key={session.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3 bg-card rounded-lg border border-border">
+                  <div key={session.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 p-3 bg-card rounded-xl border border-border">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <p className="font-medium text-foreground">{session.title}</p>
+                        <p className="font-medium text-foreground text-sm">{session.title}</p>
                         {session.isFree && (
                           <span className="px-2 py-0.5 bg-green-500/20 text-green-500 text-xs rounded-full">مجاني</span>
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground">{session.teacherName} • {session.folderName}</p>
+                      <p className="text-xs text-muted-foreground">{session.teacherName} • {session.folderName}</p>
                       <p className="text-xs text-muted-foreground mt-1">
                         {new Date(session.scheduledAt).toLocaleDateString('ar-EG')} - {new Date(session.scheduledAt).toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' })}
                       </p>
@@ -367,7 +359,7 @@ export function StudentDashboard() {
                       size="sm"
                       onClick={() => handleJoinSession(session)}
                       disabled={!canJoin || joiningSession === session.id}
-                      className={canJoin ? 'bg-red-500 hover:bg-red-600' : ''}
+                      className={`rounded-xl ${canJoin ? 'bg-red-500 hover:bg-red-600' : ''}`}
                     >
                       {joiningSession === session.id ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
@@ -387,35 +379,35 @@ export function StudentDashboard() {
           </Card>
         )}
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
           <div className="relative">
-            <TabsList className="grid w-full grid-cols-4 mb-6">
-              <TabsTrigger value="folders" className="text-xs sm:text-sm relative">
-                <FolderOpen className="w-3 h-3 sm:w-4 sm:h-4 ml-1 sm:ml-2 text-yellow-500 icon-colorful" />
+            <TabsList className="grid w-full grid-cols-4 mb-4 h-12 sm:h-14 rounded-2xl">
+              <TabsTrigger value="folders" className="text-xs sm:text-sm py-3 rounded-xl">
+                <FolderOpen className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 text-yellow-500 icon-colorful" />
                 <span>المواد</span>
               </TabsTrigger>
-              <TabsTrigger value="homework" className="text-xs sm:text-sm">
-                <ClipboardList className="w-3 h-3 sm:w-4 sm:h-4 ml-1 sm:ml-2 text-orange-500 icon-colorful" />
+              <TabsTrigger value="homework" className="text-xs sm:text-sm py-3 rounded-xl">
+                <ClipboardList className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 text-orange-500 icon-colorful" />
                 <span>الواجبات</span>
               </TabsTrigger>
-              <TabsTrigger value="summaries" className="text-xs sm:text-sm">
-                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 ml-1 sm:ml-2 text-purple-500 icon-colorful" />
+              <TabsTrigger value="summaries" className="text-xs sm:text-sm py-3 rounded-xl">
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 text-purple-500 icon-colorful" />
                 <span>الملخصات</span>
               </TabsTrigger>
-              <TabsTrigger value="flashcards" className="text-xs sm:text-sm">
-                <Library className="w-3 h-3 sm:w-4 sm:h-4 ml-1 sm:ml-2 text-pink-500 icon-colorful" />
+              <TabsTrigger value="flashcards" className="text-xs sm:text-sm py-3 rounded-xl">
+                <Library className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2 text-pink-500 icon-colorful" />
                 <span>البطاقات</span>
               </TabsTrigger>
             </TabsList>
           </div>
 
-          <TabsContent value="folders" className="space-y-6 page-slide-left">
-            <div className="mb-6">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
-                <h2 className="text-xl sm:text-2xl font-bold text-foreground">المواد الدراسية</h2>
+          <TabsContent value="folders" className="space-y-4 page-slide-left">
+            <div className="mb-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-3">
+                <h2 className="text-lg sm:text-xl font-bold text-foreground">المواد الدراسية</h2>
                 <div className="flex flex-wrap gap-2 w-full sm:w-auto">
                   <Select value={sortBy} onValueChange={setSortBy}>
-                    <SelectTrigger className="w-[140px]">
+                    <SelectTrigger className="w-[120px] rounded-xl">
                       <Filter className="w-4 h-4 ml-2" />
                       <SelectValue placeholder="ترتيب" />
                     </SelectTrigger>
@@ -427,7 +419,7 @@ export function StudentDashboard() {
                     </SelectContent>
                   </Select>
                   <Select value={filterTeacher} onValueChange={setFilterTeacher}>
-                    <SelectTrigger className="w-[140px]">
+                    <SelectTrigger className="w-[120px] rounded-xl">
                       <User className="w-4 h-4 ml-2" />
                       <SelectValue placeholder="المعلم" />
                     </SelectTrigger>
@@ -440,31 +432,22 @@ export function StudentDashboard() {
                       ))}
                     </SelectContent>
                   </Select>
+                  <Select value={filterSubject} onValueChange={setFilterSubject}>
+                    <SelectTrigger className="w-[120px] rounded-xl">
+                      <BookOpen className="w-4 h-4 ml-2" />
+                      <SelectValue placeholder="المادة" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">جميع المواد</SelectItem>
+                      {availableSubjects.map((subject, index) => (
+                        <SelectItem key={index} value={subject}>
+                          {subject}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
-              
-              {user?.grade && SUBJECTS_BY_GRADE[user.grade] && (
-                <div className="mb-6 p-4 bg-gradient-to-r from-primary/10 to-primary/5 rounded-lg border border-primary/20">
-                  <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <BookOpen className="w-4 h-4 text-primary" />
-                    مواد {getGradeLabel(user.grade)}
-                  </h3>
-                  <div className="overflow-x-auto scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' }}>
-                    <div className="flex gap-2 pb-2" style={{ touchAction: 'pan-x' }}>
-                      {SUBJECTS_BY_GRADE[user.grade].map((subject, index) => (
-                        <div
-                          key={index}
-                          className="flex-shrink-0 px-4 py-2 bg-card rounded-lg border border-border hover:border-primary transition-colors cursor-default"
-                        >
-                          <p className="text-sm font-medium text-foreground whitespace-nowrap">
-                            📚 {subject}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
 
             {loading ? (
@@ -472,13 +455,13 @@ export function StudentDashboard() {
                 <Loader2 className="w-8 h-8 animate-spin text-primary" />
               </div>
             ) : filteredFolders.length === 0 ? (
-              <Card className="p-12 text-center">
+              <Card className="p-12 text-center rounded-2xl">
                 <FolderOpen className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-foreground mb-2">لا توجد مواد</h3>
                 <p className="text-muted-foreground">لم يتم إضافة مواد لصفك الدراسي بعد</p>
               </Card>
             ) : (
-              <div className="grid grid-cols-1 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 gap-3 sm:gap-4">
                 {filteredFolders.map((folder) => {
                   const teacherInfo = teachersInfo.get(folder.teacherId);
                   const subjectsArray = teacherInfo?.subjects ? teacherInfo.subjects.split(',').map(s => s.trim()) : [];
@@ -488,11 +471,11 @@ export function StudentDashboard() {
                   return (
                     <Card
                       key={folder.id}
-                      className={`p-4 sm:p-6 hover:border-primary cursor-pointer transition-all hover:shadow-lg card-hover w-full animate-scale-in overflow-hidden ${subscribed ? 'border-yellow-500/50' : ''}`}
+                      className={`p-3 sm:p-4 hover:border-primary cursor-pointer transition-all hover:shadow-lg card-hover w-full animate-scale-in overflow-hidden rounded-2xl ${subscribed ? 'border-yellow-500/50' : ''}`}
                       onClick={() => setSelectedFolder(folder)}
                     >
-                      <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
-                        <div className="relative w-full sm:w-48 h-32 sm:h-48 rounded-2xl overflow-hidden flex-shrink-0 border-4 border-primary/30 shadow-2xl hover:scale-105 transition-transform duration-300 animate-float">
+                      <div className="flex flex-row items-start gap-3 sm:gap-4">
+                        <div className="relative w-24 h-24 sm:w-36 sm:h-36 rounded-2xl overflow-hidden flex-shrink-0 border-2 border-primary/30 shadow-lg">
                           <Image
                             src={folderImage}
                             alt={folder.name}
@@ -501,30 +484,30 @@ export function StudentDashboard() {
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent" />
                           {subscribed && (
-                            <div className="absolute top-2 right-2 px-2 py-1 bg-yellow-500 text-black text-xs font-bold rounded-full flex items-center gap-1 subscriber-badge">
-                              <Crown className="w-3 h-3" />
+                            <div className="absolute top-1 right-1 px-1.5 py-0.5 bg-yellow-500 text-black text-[10px] font-bold rounded-full flex items-center gap-0.5 subscriber-badge">
+                              <Crown className="w-2.5 h-2.5" />
                               مشترك
                             </div>
                           )}
                         </div>
                         
-                        <div className="flex-1 min-w-0 w-full space-y-4">
-                          <h3 className="text-xl sm:text-2xl font-bold text-foreground animate-slide-in-right">{folder.name}</h3>
-                          <p className="text-sm sm:text-base text-muted-foreground">{getGradeLabel(folder.grade)}</p>
+                        <div className="flex-1 min-w-0 space-y-2">
+                          <h3 className="text-base sm:text-lg font-bold text-foreground line-clamp-1">{folder.name}</h3>
+                          <p className="text-xs text-muted-foreground">{getGradeLabel(folder.grade)}</p>
                           
                           {teacherInfo && (
-                            <div className="space-y-3">
-                              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                                <div className="flex items-center gap-2">
-                                  <User className="w-5 h-5 text-blue-500 flex-shrink-0 icon-colorful" />
-                                  <span className="text-base sm:text-lg text-foreground font-semibold">{teacherInfo.name}</span>
+                            <div className="space-y-2">
+                              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                                <div className="flex items-center gap-1">
+                                  <User className="w-3.5 h-3.5 text-blue-500 flex-shrink-0 icon-colorful" />
+                                  <span className="text-xs sm:text-sm text-foreground font-semibold">{teacherInfo.name}</span>
                                 </div>
                                 
-                                <div className="flex items-center gap-1 px-2 py-1 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
+                                <div className="flex items-center gap-0.5 px-1.5 py-0.5 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
                                   {[1, 2, 3, 4, 5].map((star) => (
                                     <Star
                                       key={star}
-                                      className={`w-4 h-4 transition-all hover:scale-125 icon-colorful ${
+                                      className={`w-3 h-3 ${
                                         teacherInfo.totalRatings && teacherInfo.totalRatings > 0 && star <= Math.round(teacherInfo.averageRating || 0)
                                           ? 'fill-yellow-500 text-yellow-500'
                                           : 'text-muted-foreground/40'
@@ -532,37 +515,43 @@ export function StudentDashboard() {
                                     />
                                   ))}
                                   {teacherInfo.totalRatings && teacherInfo.totalRatings > 0 && (
-                                    <span className="text-xs text-yellow-500 mr-1">
+                                    <span className="text-[10px] text-yellow-500 mr-0.5">
                                       ({teacherInfo.averageRating?.toFixed(1)})
                                     </span>
                                   )}
                                 </div>
                                 
-                                <div className="flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-green-500/20 to-green-600/10 text-green-400 text-sm rounded-full border border-green-500/30 hover:scale-105 transition-transform">
-                                  <Building2 className="w-4 h-4" />
+                                <div className="flex items-center gap-0.5 px-1.5 py-0.5 bg-gradient-to-r from-green-500/20 to-green-600/10 text-green-400 text-xs rounded-full border border-green-500/30">
+                                  <Building2 className="w-3 h-3" />
                                   <span>{teacherInfo.centerName || 'مستقل'}</span>
                                 </div>
-                                
-                                {teacherInfo.groupName && (
-                                  <div className="flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-blue-500/20 to-blue-600/10 text-blue-400 text-sm rounded-full border border-blue-500/30 hover:scale-105 transition-transform">
-                                    <Users className="w-4 h-4" />
-                                    <span>{teacherInfo.groupName}</span>
-                                  </div>
-                                )}
                               </div>
                               
                               {subjectsArray.length > 0 && (
-                                <div className="flex flex-wrap gap-2">
-                                  {subjectsArray.map((subject, index) => (
+                                <div className="flex flex-wrap gap-1">
+                                  {subjectsArray.slice(0, 2).map((subject, index) => (
                                     <span
                                       key={index}
-                                      className="px-3 py-1 bg-gradient-to-r from-primary/20 to-primary/10 text-primary text-sm rounded-full border border-primary/20 hover:scale-105 transition-transform animate-gradient-shift"
+                                      className="px-2 py-0.5 bg-gradient-to-r from-primary/20 to-primary/10 text-primary text-[10px] sm:text-xs rounded-full border border-primary/20"
                                     >
                                       📚 {subject}
                                     </span>
                                   ))}
                                 </div>
                               )}
+
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="h-7 text-xs rounded-xl border-green-500/50 text-green-500 hover:bg-green-500/10"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleWhatsAppClick(teacherInfo, subscribed);
+                                }}
+                              >
+                                <MessageSquare className="w-3 h-3 ml-1" />
+                                تواصل واتساب
+                              </Button>
                             </div>
                           )}
                         </div>
