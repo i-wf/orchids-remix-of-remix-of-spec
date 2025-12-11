@@ -18,6 +18,10 @@ export const users = sqliteTable('users', {
   groupName: text('group_name'), // nullable, for teachers who belong to a group
   profileImage: text('profile_image'), // nullable, profile image URL for teachers
   heroImage: text('hero_image'), // nullable, hero/cover image URL for teachers
+  bio: text('bio'), // nullable, user bio/description
+  isBanned: integer('is_banned', { mode: 'boolean' }).notNull().default(false),
+  bannedUntil: text('banned_until'), // nullable, when ban expires (null = permanent)
+  banReason: text('ban_reason'), // nullable, reason for ban
   createdAt: text('created_at').notNull(),
 });
 
