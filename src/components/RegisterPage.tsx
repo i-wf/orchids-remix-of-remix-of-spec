@@ -73,17 +73,17 @@ export function RegisterPage({ onSwitchToLogin }: RegisterPageProps) {
   if (showCenterRegister) {
     return (
       <div className="min-h-screen flex flex-col bg-background animate-fade-in relative overflow-hidden">
-        {/* Gradient Background */}
-        <div
-          className="absolute inset-0"
+        {/* Hero Image Background - Same as main page */}
+        <div 
+          className="absolute inset-0 z-0"
           style={{
-            background: `
-              radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 122, 204, 0.2), transparent),
-              radial-gradient(ellipse 60% 40% at 80% 50%, rgba(78, 201, 176, 0.1), transparent),
-              radial-gradient(ellipse 50% 30% at 20% 80%, rgba(197, 134, 192, 0.1), transparent),
-              linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #1e1e1e 100%)
-            `
-          }} />
+            backgroundImage: `url('https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765424895739.png?width=8000&height=8000&resize=contain')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-background" />
+        </div>
 
         {/* Navigation */}
         <nav className="relative z-20 w-full px-4 py-4">
@@ -224,17 +224,17 @@ export function RegisterPage({ onSwitchToLogin }: RegisterPageProps) {
 
   return (
     <div className="min-h-screen flex flex-col bg-background animate-fade-in relative overflow-hidden">
-      {/* Gradient Background */}
-      <div
-        className="absolute inset-0"
+      {/* Hero Image Background - Same as main page */}
+      <div 
+        className="absolute inset-0 z-0"
         style={{
-          background: `
-            radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 122, 204, 0.2), transparent),
-            radial-gradient(ellipse 60% 40% at 80% 50%, rgba(78, 201, 176, 0.1), transparent),
-            radial-gradient(ellipse 50% 30% at 20% 80%, rgba(197, 134, 192, 0.1), transparent),
-            linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #1e1e1e 100%)
-          `
-        }} />
+          backgroundImage: `url('https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765424895739.png?width=8000&height=8000&resize=contain')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-background" />
+      </div>
 
       {/* Navigation */}
       <nav className="relative z-20 w-full px-4 py-4">
