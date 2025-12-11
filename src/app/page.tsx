@@ -120,13 +120,13 @@ export default function Home() {
         <div 
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1920&q=80')`,
+            backgroundImage: `url('https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765424895739.png?width=8000&height=8000&resize=contain')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat'
           }}>
           {/* Overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-background" />
         </div>
 
         {/* Floating Orbs */}
