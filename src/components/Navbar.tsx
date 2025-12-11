@@ -4,13 +4,14 @@ import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { GraduationCap, LogOut, Home, User, Settings, LayoutDashboard, Crown, UserCircle, ChevronUp, BookOpen, Users, Building2, BarChart3 } from 'lucide-react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 
 export function Navbar() {
   const { user, logout } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [scrolled, setScrolled] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
