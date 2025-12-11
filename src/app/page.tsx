@@ -180,19 +180,19 @@ export default function Home() {
               size="lg"
               variant="outline"
               className="btn-animate w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 border-2 border-sky-400 text-sky-400 bg-transparent hover:bg-sky-400 hover:text-white shadow-xl hover:shadow-2xl hover:shadow-sky-400/30 transition-all duration-300 hover:scale-105 mobile-scale backdrop-blur-sm"
-              onClick={() => router.push('/register')}>
+              onClick={() => router.push('/login')}>
 
               <GraduationCap className="w-5 h-5 ml-2" />
-              سجل دخولك
+              انضم معنا
             </Button>
             
             <Button
               size="lg"
               className="btn-animate w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 bg-white text-black hover:bg-white/90 shadow-xl hover:shadow-2xl transition-all hover:scale-105 mobile-scale"
-              onClick={() => router.push('/login')}>
+              onClick={() => router.push('/register')}>
 
               <Users className="w-5 h-5 ml-2" />
-              انضم معنا
+              سجل دخولك
             </Button>
           </div>
 
