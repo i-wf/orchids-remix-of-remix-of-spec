@@ -337,7 +337,7 @@ export function RegisterPage({ onSwitchToLogin }: RegisterPageProps) {
                     <SelectTrigger id="grade" className="w-full bg-white/20 border-white/30 text-white">
                       <SelectValue placeholder="اختر الصف الدراسي" />
                     </SelectTrigger>
-                    <SelectContent className="w-full">
+                    <SelectContent className="w-full bg-gray-900/95 backdrop-blur-xl border-white/20">
                       {GRADES.map((g) => (
                         <SelectItem key={g.value} value={g.value}>
                           {g.label}
