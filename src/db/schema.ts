@@ -77,6 +77,7 @@ export const lessonFolders = sqliteTable('lesson_folders', {
   teacherId: integer('teacher_id').notNull().references(() => users.id),
   grade: text('grade').notNull(),
   coverImage: text('cover_image'), // nullable, cover image URL for the folder/course
+  subscriptionPrice: integer('subscription_price').default(150), // monthly price in EGP, default 150
   createdAt: text('created_at').notNull(),
 });
 
