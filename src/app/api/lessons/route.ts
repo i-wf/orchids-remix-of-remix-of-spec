@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { lessons, users, lessonFolders } from '@/db/schema';
 import { eq, like, or, and, desc, asc } from 'drizzle-orm';
+import { isValidYouTubeUrl } from '@/lib/youtube-validator';
 
 const VALID_GRADES = [
   '4-primary',
@@ -156,6 +157,13 @@ export async function POST(request: NextRequest) {
           error: `Grade must be one of: ${VALID_GRADES.join(', ')}`, 
           code: 'INVALID_GRADE' 
         },
+        { status: 400 }
+      );
+    }
+
+    if (videoUrl && !isValidYouTubeUrl(videoUrl)) {
+      return NextResponse.json(
+        { error: 'Only YouTube video links are allowed for security reasons', code: 'INVALID_VIDEO_URL' },
         { status: 400 }
       );
     }
