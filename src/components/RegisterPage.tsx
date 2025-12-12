@@ -261,18 +261,18 @@ export function RegisterPage({ onSwitchToLogin }: RegisterPageProps) {
 
       {/* Form */}
       <div className="flex-1 flex items-center justify-center p-4 relative z-10">
-        <Card className="w-full max-w-md p-6 sm:p-8 bg-card/90 backdrop-blur-xl border-white/10 animate-scale-in">
+        <Card className="w-full max-w-md p-6 sm:p-8 bg-white/10 backdrop-blur-2xl border border-white/20 shadow-2xl animate-scale-in rounded-3xl">
           <div className="flex flex-col items-center mb-6 sm:mb-8">
             <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-primary/30 to-[#4ec9b0]/20 flex items-center justify-center mb-3 sm:mb-4 border-2 border-primary/40 shadow-lg animate-pulse-glow">
               <GraduationCap className="w-7 h-7 sm:w-8 sm:h-8 text-primary animate-icon-bounce icon-colorful" />
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-foreground text-center">منصة التعليم المصرية</h1>
-            <p className="text-muted-foreground mt-2 text-sm sm:text-base">إنشاء حساب جديد</p>
+            <h1 className="text-xl sm:text-2xl font-bold text-white text-center">منصة التعليم المصرية</h1>
+            <p className="text-white/80 mt-2 text-sm sm:text-base">إنشاء حساب جديد</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div className="space-y-2 animate-slide-up">
-              <Label htmlFor="name">الاسم</Label>
+              <Label htmlFor="name" className="text-white/90">الاسم</Label>
               <Input
                 id="name"
                 type="text"
@@ -281,12 +281,12 @@ export function RegisterPage({ onSwitchToLogin }: RegisterPageProps) {
                 placeholder="أدخل اسمك"
                 required
                 disabled={loading}
-                className="text-right w-full"
+                className="text-right w-full bg-white/20 border-white/30 text-white placeholder:text-white/50 focus:bg-white/25 focus:border-white/50"
               />
             </div>
 
             <div className="space-y-2 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-              <Label htmlFor="phone">رقم الهاتف</Label>
+              <Label htmlFor="phone" className="text-white/90">رقم الهاتف</Label>
               <Input
                 id="phone"
                 type="tel"
@@ -295,13 +295,13 @@ export function RegisterPage({ onSwitchToLogin }: RegisterPageProps) {
                 placeholder="01234567890"
                 required
                 disabled={loading}
-                className="text-right w-full"
+                className="text-right w-full bg-white/20 border-white/30 text-white placeholder:text-white/50 focus:bg-white/25 focus:border-white/50"
                 dir="ltr"
               />
             </div>
 
             <div className="space-y-2 animate-slide-up" style={{ animationDelay: '0.2s' }}>
-              <Label htmlFor="password">كلمة المرور</Label>
+              <Label htmlFor="password" className="text-white/90">كلمة المرور</Label>
               <Input
                 id="password"
                 type="password"
@@ -311,20 +311,20 @@ export function RegisterPage({ onSwitchToLogin }: RegisterPageProps) {
                 required
                 disabled={loading}
                 autoComplete="off"
-                className="w-full"
+                className="w-full bg-white/20 border-white/30 text-white placeholder:text-white/50 focus:bg-white/25 focus:border-white/50"
               />
             </div>
 
             <div className="space-y-2 animate-slide-up w-full" style={{ animationDelay: '0.3s' }}>
-              <Label htmlFor="role">نوع الحساب</Label>
+              <Label htmlFor="role" className="text-white/90">نوع الحساب</Label>
               <Select value={role} onValueChange={(value: any) => setRole(value)} disabled={loading}>
-                <SelectTrigger id="role" className="w-full">
+                <SelectTrigger id="role" className="w-full bg-white/20 border-white/30 text-white">
                   <SelectValue placeholder="اختر نوع الحساب" />
                 </SelectTrigger>
-                <SelectContent className="w-full">
-                  <SelectItem value="student">طالب</SelectItem>
-                  <SelectItem value="teacher">معلم</SelectItem>
-                  <SelectItem value="secretary">سكرتير</SelectItem>
+                <SelectContent className="w-full bg-gray-900/95 backdrop-blur-xl border-white/20">
+                  <SelectItem value="student" className="text-white hover:bg-white/10">طالب</SelectItem>
+                  <SelectItem value="teacher" className="text-white hover:bg-white/10">معلم</SelectItem>
+                  <SelectItem value="secretary" className="text-white hover:bg-white/10">سكرتير</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -332,9 +332,9 @@ export function RegisterPage({ onSwitchToLogin }: RegisterPageProps) {
             {role === 'student' && (
               <>
                 <div className="space-y-2 animate-scale-in w-full">
-                  <Label htmlFor="grade">الصف الدراسي</Label>
+                  <Label htmlFor="grade" className="text-white/90">الصف الدراسي</Label>
                   <Select value={grade} onValueChange={setGrade} disabled={loading}>
-                    <SelectTrigger id="grade" className="w-full">
+                    <SelectTrigger id="grade" className="w-full bg-white/20 border-white/30 text-white">
                       <SelectValue placeholder="اختر الصف الدراسي" />
                     </SelectTrigger>
                     <SelectContent className="w-full">
