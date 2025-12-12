@@ -5,29 +5,29 @@ import { sql } from 'drizzle-orm';
 export async function POST() {
   try {
     // Add new columns if they don't exist
-    await db.run(sql`
-      ALTER TABLE users ADD COLUMN bio TEXT;
-    `).catch(() => {
-      console.log('bio column already exists');
-    });
+    try {
+      await db.execute(sql`ALTER TABLE users ADD COLUMN bio TEXT`);
+    } catch (e) {
+      console.log('bio column already exists or error:', e);
+    }
 
-    await db.run(sql`
-      ALTER TABLE users ADD COLUMN is_banned INTEGER NOT NULL DEFAULT 0;
-    `).catch(() => {
-      console.log('is_banned column already exists');
-    });
+    try {
+      await db.execute(sql`ALTER TABLE users ADD COLUMN is_banned INTEGER NOT NULL DEFAULT 0`);
+    } catch (e) {
+      console.log('is_banned column already exists or error:', e);
+    }
 
-    await db.run(sql`
-      ALTER TABLE users ADD COLUMN banned_until TEXT;
-    `).catch(() => {
-      console.log('banned_until column already exists');
-    });
+    try {
+      await db.execute(sql`ALTER TABLE users ADD COLUMN banned_until TEXT`);
+    } catch (e) {
+      console.log('banned_until column already exists or error:', e);
+    }
 
-    await db.run(sql`
-      ALTER TABLE users ADD COLUMN ban_reason TEXT;
-    `).catch(() => {
-      console.log('ban_reason column already exists');
-    });
+    try {
+      await db.execute(sql`ALTER TABLE users ADD COLUMN ban_reason TEXT`);
+    } catch (e) {
+      console.log('ban_reason column already exists or error:', e);
+    }
 
     return NextResponse.json({ success: true, message: 'Migration completed' });
   } catch (error) {
