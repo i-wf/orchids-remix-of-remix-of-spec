@@ -70,7 +70,6 @@ export function OwnerDashboard() {
   const [accessCodes, setAccessCodes] = useState<AccessCode[]>([]);
   const [centerCodes, setCenterCodes] = useState<CenterCode[]>([]);
   const [secretaryCodes, setSecretaryCodes] = useState<SecretaryCode[]>([]);
-  const [code, setCode] = useState('');
   const [teacherName, setTeacherName] = useState('');
   const [centerCodeInput, setCenterCodeInput] = useState('');
   const [centerNameInput, setCenterNameInput] = useState('');
@@ -80,6 +79,10 @@ export function OwnerDashboard() {
   const [loading, setLoading] = useState(false);
   const [copiedId, setCopiedId] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState('codes');
+  
+  // New state for unified code generation
+  const [codePurpose, setCodePurpose] = useState<'teacher' | 'center'>('teacher');
+  const [entityName, setEntityName] = useState('');
   
   // Users management state
   const [allUsers, setAllUsers] = useState<User[]>([]);
@@ -159,31 +162,63 @@ export function OwnerDashboard() {
     }
   };
 
+  const generateRandomCode = (): string => {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let code = '';
+    for (let i = 0; i < 8; i++) {
+      code += letters.charAt(Math.floor(Math.random() * letters.length));
+    }
+    return code;
+  };
+
   const handleCreateCode = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    try {
-      const response = await fetch('/api/teacher-access-codes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          code,
-          teacherName,
-          createdByOwnerId: user?.id,
-        }),
-      });
+    const generatedCode = generateRandomCode();
 
-      if (response.ok) {
-        setCode('');
-        setTeacherName('');
-        fetchAccessCodes();
+    try {
+      if (codePurpose === 'teacher') {
+        const response = await fetch('/api/teacher-access-codes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            code: generatedCode,
+            teacherName: entityName,
+            createdByOwnerId: user?.id,
+          }),
+        });
+
+        if (response.ok) {
+          setEntityName('');
+          fetchAccessCodes();
+          toast.success(`تم إنشاء كود المعلم: ${generatedCode}`);
+        } else {
+          const error = await response.json();
+          toast.error(error.error || 'فشل إنشاء الكود');
+        }
       } else {
-        const error = await response.json();
-        alert(error.error || 'فشل إنشاء الكود');
+        const response = await fetch('/api/center-access-codes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            code: generatedCode,
+            centerName: entityName,
+            createdByOwnerId: user?.id,
+          }),
+        });
+
+        if (response.ok) {
+          setEntityName('');
+          fetchCenterCodes();
+          toast.success(`تم إنشاء كود السنتر: ${generatedCode}`);
+        } else {
+          const error = await response.json();
+          toast.error(error.error || 'فشل إنشاء الكود');
+        }
       }
     } catch (error) {
-      alert('حدث خطأ أثناء إنشاء الكود');
+      toast.error('حدث خطأ أثناء إنشاء الكود');
     } finally {
       setLoading(false);
     }
@@ -528,30 +563,41 @@ export function OwnerDashboard() {
                 <h2 className="text-lg sm:text-xl font-bold text-foreground mb-4">إنشاء كود وصول جديد</h2>
                 <form onSubmit={handleCreateCode} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="code">كود الوصول</Label>
-                    <Input
-                      id="code"
-                      type="text"
-                      value={code}
-                      onChange={(e) => setCode(e.target.value)}
-                      placeholder="TEACH2024"
-                      required
-                      disabled={loading}
-                    />
+                    <Label htmlFor="codePurpose">نوع الكود</Label>
+                    <Select value={codePurpose} onValueChange={(v) => setCodePurpose(v as 'teacher' | 'center')}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="teacher">معلم (Teacher)</SelectItem>
+                        <SelectItem value="center">سنتر (Center)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <p className="text-xs text-muted-foreground">
+                      {codePurpose === 'teacher' ? 'الكود للمعلمين' : 'الكود للسنترات'}
+                    </p>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="teacherName">اسم المعلم</Label>
+                    <Label htmlFor="entityName">
+                      {codePurpose === 'teacher' ? 'اسم المعلم' : 'اسم السنتر'}
+                    </Label>
                     <Input
-                      id="teacherName"
+                      id="entityName"
                       type="text"
-                      value={teacherName}
-                      onChange={(e) => setTeacherName(e.target.value)}
-                      placeholder="أحمد محمد"
+                      value={entityName}
+                      onChange={(e) => setEntityName(e.target.value)}
+                      placeholder={codePurpose === 'teacher' ? 'أحمد محمد' : 'سنتر النور'}
                       required
                       disabled={loading}
                       className="text-right"
                     />
+                  </div>
+
+                  <div className="bg-muted/50 p-3 rounded-lg">
+                    <p className="text-xs text-muted-foreground text-center">
+                      ⚡ سيتم توليد كود عشوائي تلقائياً (8 أحرف)
+                    </p>
                   </div>
 
                   <Button type="submit" className="w-full transition-all hover:scale-105" disabled={loading}>
@@ -574,53 +620,112 @@ export function OwnerDashboard() {
               <Card className="p-4 sm:p-6">
                 <h2 className="text-lg sm:text-xl font-bold text-foreground mb-4">أكواد الوصول</h2>
                 <div className="space-y-3 max-h-[500px] overflow-y-auto">
-                  {accessCodes.length === 0 ? (
-                    <p className="text-sm text-muted-foreground text-center py-8">لا توجد أكواد وصول</p>
-                  ) : (
-                    accessCodes.map((item) => (
-                      <div
-                        key={item.id}
-                        className="flex items-center justify-between p-3 bg-secondary rounded-lg border border-border transition-all hover:border-primary/50"
-                      >
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1">
-                            <code className="text-xs sm:text-sm font-mono font-bold text-primary truncate">{item.code}</code>
-                            {item.used ? (
-                              <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
-                            ) : (
-                              <XCircle className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                            )}
-                          </div>
-                          <p className="text-xs sm:text-sm text-muted-foreground truncate">{item.teacherName}</p>
-                          <p className="text-xs text-muted-foreground mt-1">
-                            {item.used ? 'مستخدم' : 'غير مستخدم'}
-                          </p>
-                        </div>
-                        <div className="flex gap-2 flex-shrink-0">
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => handleCopy(item.code, item.id)}
+                  <div className="mb-3">
+                    <h3 className="text-sm font-semibold text-primary mb-2">أكواد المعلمين ({accessCodes.length})</h3>
+                    {accessCodes.length === 0 ? (
+                      <p className="text-xs text-muted-foreground text-center py-4">لا توجد أكواد معلمين</p>
+                    ) : (
+                      <div className="space-y-2">
+                        {accessCodes.map((item) => (
+                          <div
+                            key={item.id}
+                            className="flex items-center justify-between p-3 bg-secondary rounded-lg border border-border transition-all hover:border-primary/50"
                           >
-                            {copiedId === item.id ? (
-                              <CheckCircle2 className="w-4 h-4" />
-                            ) : (
-                              <Copy className="w-4 h-4" />
-                            )}
-                          </Button>
-                          {!item.used && (
-                            <Button
-                              size="sm"
-                              variant="destructive"
-                              onClick={() => handleDeleteCode(item.id)}
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </Button>
-                          )}
-                        </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-1">
+                                <code className="text-xs sm:text-sm font-mono font-bold text-primary truncate">{item.code}</code>
+                                {item.used ? (
+                                  <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
+                                ) : (
+                                  <XCircle className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                                )}
+                              </div>
+                              <p className="text-xs sm:text-sm text-muted-foreground truncate">{item.teacherName}</p>
+                              <p className="text-xs text-muted-foreground mt-1">
+                                {item.used ? 'مستخدم ✅' : 'غير مستخدم ⏳'}
+                              </p>
+                            </div>
+                            <div className="flex gap-2 flex-shrink-0">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleCopy(item.code, item.id)}
+                              >
+                                {copiedId === item.id ? (
+                                  <CheckCircle2 className="w-4 h-4" />
+                                ) : (
+                                  <Copy className="w-4 h-4" />
+                                )}
+                              </Button>
+                              {!item.used && (
+                                <Button
+                                  size="sm"
+                                  variant="destructive"
+                                  onClick={() => handleDeleteCode(item.id)}
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    ))
-                  )}
+                    )}
+                  </div>
+
+                  <div className="border-t pt-3">
+                    <h3 className="text-sm font-semibold text-green-500 mb-2">أكواد السنترات ({centerCodes.length})</h3>
+                    {centerCodes.length === 0 ? (
+                      <p className="text-xs text-muted-foreground text-center py-4">لا توجد أكواد سنترات</p>
+                    ) : (
+                      <div className="space-y-2">
+                        {centerCodes.map((item) => (
+                          <div
+                            key={item.id}
+                            className="flex items-center justify-between p-3 bg-green-500/5 rounded-lg border border-green-500/20 transition-all hover:border-green-500/50"
+                          >
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-1">
+                                <Building2 className="w-3 h-3 text-green-500 flex-shrink-0" />
+                                <code className="text-xs sm:text-sm font-mono font-bold text-green-500 truncate">{item.code}</code>
+                                {item.used ? (
+                                  <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
+                                ) : (
+                                  <XCircle className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                                )}
+                              </div>
+                              <p className="text-xs sm:text-sm text-muted-foreground truncate">{item.centerName}</p>
+                              <p className="text-xs text-muted-foreground mt-1">
+                                {item.used ? 'مستخدم ✅' : 'غير مستخدم ⏳'}
+                              </p>
+                            </div>
+                            <div className="flex gap-2 flex-shrink-0">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleCopy(item.code, item.id)}
+                              >
+                                {copiedId === item.id ? (
+                                  <CheckCircle2 className="w-4 h-4" />
+                                ) : (
+                                  <Copy className="w-4 h-4" />
+                                )}
+                              </Button>
+                              {!item.used && (
+                                <Button
+                                  size="sm"
+                                  variant="destructive"
+                                  onClick={() => handleDeleteCenterCode(item.id)}
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </Card>
             </div>
