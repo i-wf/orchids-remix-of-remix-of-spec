@@ -70,9 +70,6 @@ export function OwnerDashboard() {
   const [accessCodes, setAccessCodes] = useState<AccessCode[]>([]);
   const [centerCodes, setCenterCodes] = useState<CenterCode[]>([]);
   const [secretaryCodes, setSecretaryCodes] = useState<SecretaryCode[]>([]);
-  const [teacherName, setTeacherName] = useState('');
-  const [centerCodeInput, setCenterCodeInput] = useState('');
-  const [centerNameInput, setCenterNameInput] = useState('');
   const [secretaryCodeInput, setSecretaryCodeInput] = useState('');
   const [secretaryNameInput, setSecretaryNameInput] = useState('');
   const [selectedTeacherId, setSelectedTeacherId] = useState('');
@@ -216,37 +213,6 @@ export function OwnerDashboard() {
           const error = await response.json();
           toast.error(error.error || 'فشل إنشاء الكود');
         }
-      }
-    } catch (error) {
-      toast.error('حدث خطأ أثناء إنشاء الكود');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleCreateCenterCode = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const response = await fetch('/api/center-access-codes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          code: centerCodeInput.toUpperCase(),
-          centerName: centerNameInput,
-          createdByOwnerId: user?.id,
-        }),
-      });
-
-      if (response.ok) {
-        setCenterCodeInput('');
-        setCenterNameInput('');
-        fetchCenterCodes();
-        toast.success('تم إنشاء كود السنتر بنجاح');
-      } else {
-        const error = await response.json();
-        toast.error(error.error || 'فشل إنشاء الكود');
       }
     } catch (error) {
       toast.error('حدث خطأ أثناء إنشاء الكود');
@@ -523,7 +489,7 @@ export function OwnerDashboard() {
                 <Key className="w-6 h-6 text-yellow-500" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-foreground">{accessCodes.length}</p>
+                <p className="text-2xl font-bold text-foreground">{accessCodes.length + centerCodes.length}</p>
                 <p className="text-sm text-muted-foreground">كود وصول</p>
               </div>
             </div>
@@ -850,7 +816,7 @@ export function OwnerDashboard() {
                           onClick={() => handleDeleteUser(teacher.id)}
                           className="flex-1 sm:flex-none"
                         >
-                          <Trash2 className="w-4 h-4 ml-2" />
+                          <Trash2 className="w-4 h-4" />
                           حذف
                         </Button>
                       </div>
