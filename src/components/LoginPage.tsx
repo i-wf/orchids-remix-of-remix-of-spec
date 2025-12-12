@@ -98,14 +98,14 @@ export function LoginPage({ onSwitchToRegister }: LoginPageProps) {
               <GraduationCap className="w-7 h-7 sm:w-8 sm:h-8 text-primary animate-icon-bounce icon-colorful" />
             </div>
             <h1 className="text-xl sm:text-2xl font-bold text-white text-center">منصة التعليم المصرية</h1>
-            <p className="text-muted-foreground mt-2 text-sm sm:text-base">
+            <p className="text-white/80 mt-2 text-sm sm:text-base">
               {showOwnerLogin ? 'تسجيل دخول المالك 🔐' : 'تسجيل الدخول'}
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div className="space-y-2 animate-slide-up">
-              <Label htmlFor="phone">رقم الهاتف</Label>
+              <Label htmlFor="phone" className="text-white/90">رقم الهاتف</Label>
               <Input
                 id="phone"
                 type="tel"
@@ -114,13 +114,13 @@ export function LoginPage({ onSwitchToRegister }: LoginPageProps) {
                 placeholder="01234567890"
                 required
                 disabled={loading}
-                className="text-right w-full"
+                className="text-right w-full bg-white/20 border-white/30 text-white placeholder:text-white/50 focus:bg-white/25 focus:border-white/50"
                 dir="ltr"
               />
             </div>
 
             <div className="space-y-2 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-              <Label htmlFor="password">كلمة المرور</Label>
+              <Label htmlFor="password" className="text-white/90">كلمة المرور</Label>
               <Input
                 id="password"
                 type="password"
@@ -129,12 +129,12 @@ export function LoginPage({ onSwitchToRegister }: LoginPageProps) {
                 placeholder="••••••••"
                 required
                 disabled={loading}
-                className="w-full"
+                className="w-full bg-white/20 border-white/30 text-white placeholder:text-white/50 focus:bg-white/25 focus:border-white/50"
               />
             </div>
 
             {error && (
-              <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm text-center animate-shake">
+              <div className="p-3 rounded-lg bg-red-500/20 border border-red-500/50 text-white text-sm text-center animate-shake">
                 {error}
               </div>
             )}
@@ -154,7 +154,7 @@ export function LoginPage({ onSwitchToRegister }: LoginPageProps) {
               <button
                 type="button"
                 onClick={onSwitchToRegister}
-                className="text-primary hover:underline text-sm transition-colors"
+                className="text-white hover:text-primary hover:underline text-sm transition-colors"
                 disabled={loading}
               >
                 ليس لديك حساب؟ سجل الآن
