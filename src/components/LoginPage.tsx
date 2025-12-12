@@ -89,7 +89,7 @@ export function LoginPage({ onSwitchToRegister }: LoginPageProps) {
 
       {/* Form */}
       <div className="flex-1 flex items-center justify-center p-4 relative z-10">
-        <Card className="w-full max-w-md p-6 sm:p-8 bg-card/90 backdrop-blur-xl border-white/10 animate-scale-in">
+        <Card className="w-full max-w-md p-6 sm:p-8 bg-white/10 backdrop-blur-2xl border border-white/20 shadow-2xl animate-scale-in rounded-3xl">
           <div className="flex flex-col items-center mb-6 sm:mb-8">
             <div
               className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-primary/30 to-[#4ec9b0]/20 flex items-center justify-center mb-3 sm:mb-4 border-2 border-primary/40 shadow-lg cursor-pointer hover:bg-primary/20 transition-all active:scale-95 animate-pulse-glow"
@@ -97,7 +97,7 @@ export function LoginPage({ onSwitchToRegister }: LoginPageProps) {
             >
               <GraduationCap className="w-7 h-7 sm:w-8 sm:h-8 text-primary animate-icon-bounce icon-colorful" />
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-foreground text-center">منصة التعليم المصرية</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-white text-center">منصة التعليم المصرية</h1>
             <p className="text-muted-foreground mt-2 text-sm sm:text-base">
               {showOwnerLogin ? 'تسجيل دخول المالك 🔐' : 'تسجيل الدخول'}
             </p>
