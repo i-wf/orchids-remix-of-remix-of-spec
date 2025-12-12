@@ -161,13 +161,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (videoUrl && !isValidYouTubeUrl(videoUrl)) {
-      return NextResponse.json(
-        { error: 'Only YouTube video links are allowed for security reasons', code: 'INVALID_VIDEO_URL' },
-        { status: 400 }
-      );
-    }
-
     // Validate teacherId exists and is a teacher
     const teacher = await db
       .select()
