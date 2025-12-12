@@ -272,6 +272,13 @@ export async function PUT(request: NextRequest) {
       );
     }
 
+    if (videoUrl && !isValidYouTubeUrl(videoUrl)) {
+      return NextResponse.json(
+        { error: 'Only YouTube video links are allowed for security reasons', code: 'INVALID_VIDEO_URL' },
+        { status: 400 }
+      );
+    }
+
     // Validate folderId if being changed
     if (folderId) {
       const folder = await db
