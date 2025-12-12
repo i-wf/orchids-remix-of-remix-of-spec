@@ -107,20 +107,20 @@ export function RegisterPage({ onSwitchToLogin }: RegisterPageProps) {
 
         {/* Form */}
         <div className="flex-1 flex items-center justify-center p-4 relative z-10">
-          <Card className="w-full max-w-md p-6 sm:p-8 bg-card/90 backdrop-blur-xl border-white/10 animate-scale-in">
+          <Card className="w-full max-w-md p-6 sm:p-8 bg-white/10 backdrop-blur-2xl border border-white/20 shadow-2xl animate-scale-in rounded-3xl">
             <div className="flex flex-col items-center mb-6 sm:mb-8">
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-orange-500/30 to-yellow-500/20 flex items-center justify-center mb-3 sm:mb-4 border-2 border-orange-500/40 shadow-lg animate-pulse-glow">
                 <Building2 className="w-7 h-7 sm:w-8 sm:h-8 text-orange-500 animate-icon-bounce" />
               </div>
-              <h1 className="text-xl sm:text-2xl font-bold text-foreground text-center">تسجيل سنتر جديد</h1>
-              <p className="text-muted-foreground mt-2 text-sm sm:text-base text-center">أدخل بيانات السنتر للتسجيل</p>
+              <h1 className="text-xl sm:text-2xl font-bold text-white text-center">تسجيل سنتر جديد</h1>
+              <p className="text-white/80 mt-2 text-sm sm:text-base text-center">أدخل بيانات السنتر للتسجيل</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
               <input type="hidden" value="owner" />
 
               <div className="space-y-2 animate-slide-up">
-                <Label htmlFor="centerName">اسم السنتر</Label>
+                <Label htmlFor="centerName" className="text-white/90">اسم السنتر</Label>
                 <Input
                   id="centerName"
                   type="text"
@@ -129,12 +129,12 @@ export function RegisterPage({ onSwitchToLogin }: RegisterPageProps) {
                   placeholder="أدخل اسم السنتر"
                   required
                   disabled={loading}
-                  className="text-right w-full"
+                  className="text-right w-full bg-white/20 border-white/30 text-white placeholder:text-white/50 focus:bg-white/25 focus:border-white/50"
                 />
               </div>
 
               <div className="space-y-2 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-                <Label htmlFor="ownerName">اسم صاحب السنتر</Label>
+                <Label htmlFor="ownerName" className="text-white/90">اسم صاحب السنتر</Label>
                 <Input
                   id="ownerName"
                   type="text"
@@ -143,12 +143,12 @@ export function RegisterPage({ onSwitchToLogin }: RegisterPageProps) {
                   placeholder="أدخل اسم صاحب السنتر"
                   required
                   disabled={loading}
-                  className="text-right w-full"
+                  className="text-right w-full bg-white/20 border-white/30 text-white placeholder:text-white/50 focus:bg-white/25 focus:border-white/50"
                 />
               </div>
 
               <div className="space-y-2 animate-slide-up" style={{ animationDelay: '0.2s' }}>
-                <Label htmlFor="phone">رقم الهاتف</Label>
+                <Label htmlFor="phone" className="text-white/90">رقم الهاتف</Label>
                 <Input
                   id="phone"
                   type="tel"
@@ -157,13 +157,13 @@ export function RegisterPage({ onSwitchToLogin }: RegisterPageProps) {
                   placeholder="01234567890"
                   required
                   disabled={loading}
-                  className="text-right w-full"
+                  className="text-right w-full bg-white/20 border-white/30 text-white placeholder:text-white/50 focus:bg-white/25 focus:border-white/50"
                   dir="ltr"
                 />
               </div>
 
               <div className="space-y-2 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-                <Label htmlFor="password">كلمة المرور</Label>
+                <Label htmlFor="password" className="text-white/90">كلمة المرور</Label>
                 <Input
                   id="password"
                   type="password"
@@ -173,12 +173,12 @@ export function RegisterPage({ onSwitchToLogin }: RegisterPageProps) {
                   required
                   disabled={loading}
                   autoComplete="off"
-                  className="w-full"
+                  className="w-full bg-white/20 border-white/30 text-white placeholder:text-white/50 focus:bg-white/25 focus:border-white/50"
                 />
               </div>
 
               <div className="space-y-2 animate-slide-up" style={{ animationDelay: '0.4s' }}>
-                <Label htmlFor="accessCode">كود الدخول</Label>
+                <Label htmlFor="accessCode" className="text-white/90">كود الدخول</Label>
                 <Input
                   id="accessCode"
                   type="text"
@@ -187,13 +187,13 @@ export function RegisterPage({ onSwitchToLogin }: RegisterPageProps) {
                   placeholder="أدخل كود الدخول الخاص بالسنتر"
                   required
                   disabled={loading}
-                  className="text-right w-full"
+                  className="text-right w-full bg-white/20 border-white/30 text-white placeholder:text-white/50 focus:bg-white/25 focus:border-white/50"
                 />
-                <p className="text-xs text-muted-foreground">الكود موجود في صفحة الـ Owner</p>
+                <p className="text-xs text-white/70">الكود موجود في صفحة الـ Owner</p>
               </div>
 
               {error && (
-                <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm text-center animate-shake">
+                <div className="p-3 rounded-lg bg-red-500/20 border border-red-500/50 text-white text-sm text-center animate-shake">
                   {error}
                 </div>
               )}
