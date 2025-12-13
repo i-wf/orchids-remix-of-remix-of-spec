@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { GraduationCap, LogOut, Home, User, Settings, LayoutDashboard, Crown, UserCircle, ChevronUp, BookOpen, Users, Building2, BarChart3 } from 'lucide-react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
+import { NotificationButton } from '@/components/ui/notification-button';
 
 function NavbarContent() {
   const { user, logout } = useAuth();
@@ -15,6 +16,7 @@ function NavbarContent() {
   const [scrolled, setScrolled] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const profileMenuRef = useRef<HTMLDivElement>(null);
   
   const currentView = searchParams.get('view');
@@ -42,6 +44,26 @@ function NavbarContent() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (user && user.role === 'student') {
+      fetchUnreadCount();
+      const interval = setInterval(fetchUnreadCount, 30000);
+      return () => clearInterval(interval);
+    }
+  }, [user]);
+
+  const fetchUnreadCount = async () => {
+    try {
+      const response = await fetch('/api/notifications/unread-count');
+      if (response.ok) {
+        const data = await response.json();
+        setUnreadCount(data.count || 0);
+      }
+    } catch (error) {
+      console.error('Error fetching unread count:', error);
+    }
+  };
+
   const navLinks = user 
     ? [{ href: '/dashboard', label: 'لوحة التحكم', icon: LayoutDashboard, requireAuth: true }]
     : [
@@ -65,6 +87,10 @@ function NavbarContent() {
 
   const handleSettingsClick = () => {
     router.push('/dashboard?view=settings');
+  };
+
+  const handleNotificationClick = () => {
+    router.push('/dashboard?view=notifications');
   };
 
   const hasSubscription = user?.subscriptionType && user.subscriptionType !== 'free';
