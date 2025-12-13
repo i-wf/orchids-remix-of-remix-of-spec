@@ -121,8 +121,8 @@ export default function Home() {
         badgeText="ذكاء اصطناعي"
         badgeLabel="تعليم"
         ctaButtons={[
-          { text: "انضم معنا", href: "#", primary: true },
-          { text: "سجل دخولك", href: "#" }
+          { text: "انضم معنا", href: "/register", primary: true },
+          { text: "سجل دخولك", href: "/login" }
         ]}
         microDetails={[
           "دروس تفاعلية",
