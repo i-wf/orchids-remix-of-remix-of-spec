@@ -7,7 +7,7 @@ import { Loader2, GraduationCap, BookOpen, Users, Sparkles, Trophy, Brain, Star,
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
-import SyntheticHero from '@/components/ui/synthetic-hero';
+import { Component as EtheralShadow } from '@/components/ui/etheral-shadow';
 
 export const dynamic = 'force-dynamic';
 
