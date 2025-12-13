@@ -146,6 +146,14 @@ function NavbarContent() {
                     <span className="text-sm font-medium text-white">{user.name}</span>
                     {hasSubscription && <Crown className="w-4 h-4 text-yellow-500 subscriber-badge" />}
                   </div>
+                  {user.role === 'student' && (
+                    <NotificationButton
+                      count={unreadCount}
+                      size="sm"
+                      onClick={handleNotificationClick}
+                      className="bg-transparent border-white/30 text-white hover:bg-white/10 hover:text-white hover:border-white/50 transition-all"
+                    />
+                  )}
                   <Button
                     variant="outline"
                     size="sm"
