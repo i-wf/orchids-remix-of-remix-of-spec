@@ -2,105 +2,26 @@
 
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Loader2, GraduationCap, BookOpen, Users, Sparkles, Trophy, Brain, Star, ChevronLeft } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { Component as EtheralShadow } from '@/components/ui/etheral-shadow';
+import { DemoOne } from '@/components/ui/demo-hero';
+import DemoSpotlight from '@/components/ui/demo-spotlight';
 
 export const dynamic = 'force-dynamic';
-
-interface FeaturedTeacher {
-  id: number;
-  name: string;
-  subjects: string | null;
-  centerName: string | null;
-  averageRating: number;
-  totalRatings: number;
-  lessonsCount: number;
-}
 
 export default function Home() {
   const { user, loading } = useAuth();
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
-  const [featuredTeachers, setFeaturedTeachers] = useState<FeaturedTeacher[]>([]);
-  const [loadingTeachers, setLoadingTeachers] = useState(true);
 
   useEffect(() => {
     setMounted(true);
-    fetchFeaturedTeachers();
     if (!loading && user) {
       router.push('/dashboard');
     }
   }, [user, loading, router]);
-
-  useEffect(() => {
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(observerCallback, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    });
-
-    const elements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right');
-    elements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, [mounted, featuredTeachers]);
-
-  const fetchFeaturedTeachers = async () => {
-    try {
-      const response = await fetch('/api/users?role=teacher&limit=6');
-      if (response.ok) {
-        const teachers = await response.json();
-        const teachersWithRatings: FeaturedTeacher[] = [];
-
-        for (const teacher of teachers.slice(0, 6)) {
-          const ratingsRes = await fetch(`/api/ratings?teacherId=${teacher.id}&limit=100`);
-          const foldersRes = await fetch(`/api/lesson-folders?teacherId=${teacher.id}&limit=100`);
-
-          let avgRating = 0,totalRatings = 0,lessonsCount = 0;
-
-          if (ratingsRes.ok) {
-            const ratings = await ratingsRes.json();
-            totalRatings = ratings.length;
-            if (totalRatings > 0) {
-              avgRating = ratings.reduce((sum: number, r: any) => sum + r.rating, 0) / totalRatings;
-            }
-          }
-
-          if (foldersRes.ok) {
-            const folders = await foldersRes.json();
-            lessonsCount = folders.length;
-          }
-
-          teachersWithRatings.push({
-            id: teacher.id,
-            name: teacher.name,
-            subjects: teacher.subjects,
-            centerName: teacher.centerName,
-            averageRating: avgRating,
-            totalRatings,
-            lessonsCount
-          });
-        }
-
-        setFeaturedTeachers(teachersWithRatings);
-      }
-    } catch (error) {
-      console.error('Error fetching teachers:', error);
-    } finally {
-      setLoadingTeachers(false);
-    }
-  };
 
   if (loading) {
     return (
@@ -174,6 +95,10 @@ export default function Home() {
           </ul>
         </div>
       </div>
+
+      <DemoOne />
+      
+      <DemoSpotlight />
     </div>);
 
 }
