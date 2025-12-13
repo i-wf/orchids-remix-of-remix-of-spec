@@ -102,7 +102,7 @@ const fragmentShader = `
 
       c /= 8.0;
 
-      vec3 baseColor = vec3(0.306, 0.788, 0.690);
+      vec3 baseColor = vec3(0.4, 0.6, 0.9);
       vec3 finalColor = baseColor * smoothstep(0.0, 1.0, c * 0.6);
 
       fragColor = vec4(finalColor, 1.0);
@@ -257,12 +257,12 @@ const SyntheticHero = ({
 
 			<div className="relative z-10 flex flex-col items-center text-center px-6">
 				<div ref={badgeWrapperRef}>
-					<Badge className="mb-6 bg-white/10 hover:bg-white/15 text-[#4ec9b0] backdrop-blur-md border border-white/20 uppercase tracking-wider font-medium flex items-center gap-2 px-4 py-1.5">
-						<span className="text-[10px] font-light tracking-[0.18em] text-[#4ec9b0]/80">
+					<Badge className="mb-6 bg-white/10 hover:bg-white/15 text-blue-300 backdrop-blur-md border border-white/20 uppercase tracking-wider font-medium flex items-center gap-2 px-4 py-1.5">
+						<span className="text-[10px] font-light tracking-[0.18em] text-blue-100/80">
 							{badgeLabel}
 						</span>
-						<span className="h-1 w-1 rounded-full bg-[#4ec9b0]/60" />
-						<span className="text-xs font-light tracking-tight text-[#4ec9b0]">
+						<span className="h-1 w-1 rounded-full bg-blue-200/60" />
+						<span className="text-xs font-light tracking-tight text-blue-200">
 							{badgeText}
 						</span>
 					</Badge>
@@ -277,7 +277,7 @@ const SyntheticHero = ({
 
 				<p
 					ref={paragraphRef}
-					className="text-[#4ec9b0]/80 text-lg max-w-2xl mx-auto mb-10 font-light"
+					className="text-blue-50/80 text-lg max-w-2xl mx-auto mb-10 font-light"
 				>
 					{description}
 				</p>
@@ -289,7 +289,7 @@ const SyntheticHero = ({
 					{ctaButtons.map((button, index) => {
 						const isPrimary = button.primary ?? index === 0;
 						const classes = isPrimary
-							? "px-8 py-3 rounded-xl text-base font-medium backdrop-blur-lg bg-[#4ec9b0]/80 hover:bg-[#4ec9b0]/90 shadow-lg transition-all cursor-pointer text-[#1e1e1e]"
+							? "px-8 py-3 rounded-xl text-base font-medium backdrop-blur-lg bg-blue-400/80 hover:bg-blue-300/80 shadow-lg transition-all cursor-pointer"
 							: "px-8 py-3 rounded-xl text-base font-medium border-white/30 text-white hover:bg-white/10 backdrop-blur-lg transition-all cursor-pointer";
 
 						if (button.href) {
@@ -320,11 +320,11 @@ const SyntheticHero = ({
 				{microDetails.length > 0 && (
 					<ul
 						ref={microRef}
-						className="mt-8 flex flex-wrap justify-center gap-6 text-xs font-light tracking-tight text-[#4ec9b0]/70"
+						className="mt-8 flex flex-wrap justify-center gap-6 text-xs font-light tracking-tight text-blue-100/70"
 					>
 						{microDetails.map((detail, index) => (
 							<li key={index} className="flex items-center gap-2">
-								<span className="h-1 w-1 rounded-full bg-[#4ec9b0]/60" />
+								<span className="h-1 w-1 rounded-full bg-blue-200/60" />
 								{detail}
 							</li>
 						))}
