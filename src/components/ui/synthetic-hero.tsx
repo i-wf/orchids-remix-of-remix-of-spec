@@ -243,9 +243,9 @@ const SyntheticHero = ({
 	return (
 		<section
 			ref={sectionRef}
-			className="relative flex items-center justify-center min-h-screen overflow-hidden"
+			className="relative flex items-center justify-center min-h-screen overflow-hidden bg-background"
 		>
-			<div className="absolute inset-0 z-0">
+			<div className="absolute inset-0 z-0 opacity-30">
 				<Canvas>
 					<ShaderPlane
 						vertexShader={vertexShader}
@@ -257,12 +257,12 @@ const SyntheticHero = ({
 
 			<div className="relative z-10 flex flex-col items-center text-center px-6">
 				<div ref={badgeWrapperRef}>
-					<Badge className="mb-6 bg-white/10 hover:bg-white/15 text-blue-300 backdrop-blur-md border border-white/20 uppercase tracking-wider font-medium flex items-center gap-2 px-4 py-1.5">
-						<span className="text-[10px] font-light tracking-[0.18em] text-blue-100/80">
+					<Badge className="mb-6 bg-primary/10 hover:bg-primary/15 text-primary backdrop-blur-md border border-primary/20 uppercase tracking-wider font-medium flex items-center gap-2 px-4 py-1.5">
+						<span className="text-[10px] font-light tracking-[0.18em] text-primary/80">
 							{badgeLabel}
 						</span>
-						<span className="h-1 w-1 rounded-full bg-blue-200/60" />
-						<span className="text-xs font-light tracking-tight text-blue-200">
+						<span className="h-1 w-1 rounded-full bg-primary/60" />
+						<span className="text-xs font-light tracking-tight text-primary">
 							{badgeText}
 						</span>
 					</Badge>
@@ -270,14 +270,14 @@ const SyntheticHero = ({
 
 				<h1
 					ref={headingRef}
-					className="text-5xl md:text-7xl max-w-4xl font-light tracking-tight text-white mb-4"
+					className="text-5xl md:text-7xl max-w-4xl font-light tracking-tight text-foreground mb-4"
 				>
 					{title}
 				</h1>
 
 				<p
 					ref={paragraphRef}
-					className="text-blue-50/80 text-lg max-w-2xl mx-auto mb-10 font-light"
+					className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10 font-light"
 				>
 					{description}
 				</p>
@@ -289,8 +289,8 @@ const SyntheticHero = ({
 					{ctaButtons.map((button, index) => {
 						const isPrimary = button.primary ?? index === 0;
 						const classes = isPrimary
-							? "px-8 py-3 rounded-xl text-base font-medium backdrop-blur-lg bg-blue-400/80 hover:bg-blue-300/80 shadow-lg transition-all cursor-pointer"
-							: "px-8 py-3 rounded-xl text-base font-medium border-white/30 text-white hover:bg-white/10 backdrop-blur-lg transition-all cursor-pointer";
+							? "px-8 py-3 rounded-xl text-base font-medium backdrop-blur-lg bg-primary hover:bg-primary/90 shadow-lg transition-all cursor-pointer"
+							: "px-8 py-3 rounded-xl text-base font-medium border-muted-foreground/30 text-foreground hover:bg-muted backdrop-blur-lg transition-all cursor-pointer";
 
 						if (button.href) {
 							return (
@@ -320,11 +320,11 @@ const SyntheticHero = ({
 				{microDetails.length > 0 && (
 					<ul
 						ref={microRef}
-						className="mt-8 flex flex-wrap justify-center gap-6 text-xs font-light tracking-tight text-blue-100/70"
+						className="mt-8 flex flex-wrap justify-center gap-6 text-xs font-light tracking-tight text-muted-foreground"
 					>
 						{microDetails.map((detail, index) => (
 							<li key={index} className="flex items-center gap-2">
-								<span className="h-1 w-1 rounded-full bg-blue-200/60" />
+								<span className="h-1 w-1 rounded-full bg-primary/60" />
 								{detail}
 							</li>
 						))}
