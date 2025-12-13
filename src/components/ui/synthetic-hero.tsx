@@ -102,7 +102,7 @@ const fragmentShader = `
 
       c /= 8.0;
 
-      vec3 baseColor = vec3(0.4, 0.6, 0.9);
+      vec3 baseColor = vec3(0.15, 0.15, 0.15);
       vec3 finalColor = baseColor * smoothstep(0.0, 1.0, c * 0.6);
 
       fragColor = vec4(finalColor, 1.0);
