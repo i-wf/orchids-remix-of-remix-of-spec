@@ -54,10 +54,10 @@ function NavbarContent() {
 
   const fetchUnreadCount = async () => {
     try {
-      const response = await fetch('/api/notifications/unread-count');
+      const response = await fetch(`/api/notifications/unread-count?studentId=${user?.id}`);
       if (response.ok) {
         const data = await response.json();
-        setUnreadCount(data.count || 0);
+        setUnreadCount(data.unreadCount || 0);
       }
     } catch (error) {
       console.error('Error fetching unread count:', error);
