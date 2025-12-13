@@ -7,6 +7,7 @@ import { Loader2, GraduationCap, BookOpen, Users, Sparkles, Trophy, Brain, Star,
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
+import SyntheticHero from '@/components/ui/synthetic-hero';
 
 export const dynamic = 'force-dynamic';
 
@@ -114,93 +115,21 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background page-fade-in">
-      {/* Hero Section with Background Image */}
-      <div className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Hero Image Background */}
-        <div 
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: `url('https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765424895739.png?width=8000&height=8000&resize=contain')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}>
-          {/* Overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-background" />
-        </div>
-
-        {/* Floating Orbs */}
-        <div className="absolute top-20 left-[10%] w-72 h-72 bg-primary/20 rounded-full blur-[100px] animate-float z-[1]" />
-        <div className="absolute bottom-20 right-[10%] w-96 h-96 bg-[#4ec9b0]/15 rounded-full blur-[120px] animate-float z-[1]" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#c586c0]/10 rounded-full blur-[150px] animate-float z-[1]" style={{ animationDelay: '2s' }} />
-
-        {/* Grid Pattern Overlay */}
-        <div 
-          className="absolute inset-0 opacity-[0.03] z-[1]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px'
-          }} />
-
-        {/* Text Content Centered */}
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          {/* Logo Above Title */}
-          <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-primary/30 to-[#4ec9b0]/20 flex items-center justify-center mx-auto mb-4 sm:mb-6 border-2 border-primary/40 shadow-2xl animate-pulse-glow">
-            <GraduationCap className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 text-primary" />
-          </div>
-
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 animate-slide-up">
-            منصة التعليم المصرية
-          </h1>
-          
-          <p className="text-base sm:text-lg md:text-2xl text-white/90 mb-8 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            منصة تعليمية متكاملة مدعومة بالذكاء الاصطناعي
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8">
-            <div className="stagger-item flex items-center gap-2 text-sm sm:text-base text-white bg-white/10 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/30 shadow-lg hover:shadow-xl hover:scale-105 hover:bg-white/20 transition-all duration-300">
-              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-              <span>دروس تفاعلية</span>
-            </div>
-            <div className="stagger-item flex items-center gap-2 text-sm sm:text-base text-white bg-white/10 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/30 shadow-lg hover:shadow-xl hover:scale-105 hover:bg-white/20 transition-all duration-300">
-              <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-              <span>ملخصات ذكية</span>
-            </div>
-            <div className="stagger-item flex items-center gap-2 text-sm sm:text-base text-white bg-white/10 backdrop-blur-md px-4 py-2.5 rounded-full border border-white/30 shadow-lg hover:shadow-xl hover:scale-105 hover:bg-white/20 transition-all duration-300">
-              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-              <span>مساعد تعليمي</span>
-            </div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-scale-in" style={{ animationDelay: '0.3s' }}>
-            <Button
-              size="lg"
-              className="btn-animate w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 bg-white text-black hover:bg-white/90 shadow-xl hover:shadow-2xl transition-all hover:scale-105 mobile-scale"
-              onClick={() => router.push('/register')}>
-
-              <GraduationCap className="w-5 h-5 ml-2" />
-              انضم معنا
-            </Button>
-            
-            <Button
-              size="lg"
-              variant="outline"
-              className="btn-animate w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 border-2 border-sky-400 text-sky-400 bg-transparent hover:bg-sky-400 hover:text-white shadow-xl hover:shadow-2xl hover:shadow-sky-400/30 transition-all duration-300 hover:scale-105 mobile-scale backdrop-blur-sm"
-              onClick={() => router.push('/login')}>
-
-              <Users className="w-5 h-5 ml-2" />
-              سجل دخولك
-            </Button>
-          </div>
-
-          <p className="text-xs sm:text-sm text-white/80 mt-6 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            من الصف الرابع الابتدائي إلى الثالث الثانوي
-          </p>
-        </div>
-      </div>
+      <SyntheticHero
+        title="منصة التعليم المصرية"
+        description="منصة تعليمية متكاملة مدعومة بالذكاء الاصطناعي - من الصف الرابع الابتدائي إلى الثالث الثانوي"
+        badgeText="ذكاء اصطناعي"
+        badgeLabel="تعليم"
+        ctaButtons={[
+          { text: "انضم معنا", href: "#", primary: true },
+          { text: "سجل دخولك", href: "#" }
+        ]}
+        microDetails={[
+          "دروس تفاعلية",
+          "ملخصات ذكية",
+          "مساعد تعليمي"
+        ]}
+      />
 
       {/* Features Section */}
       <div className="py-12 sm:py-20 px-4 bg-gradient-to-b from-background to-card/30 relative overflow-hidden">
