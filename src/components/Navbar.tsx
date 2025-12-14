@@ -101,15 +101,15 @@ function NavbarContent() {
     <>
       <nav className={`hidden md:block fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled 
-          ? 'bg-background/95 backdrop-blur-xl shadow-lg shadow-primary/10 border-b border-white/10' 
-          : 'bg-transparent'
+          ? 'bg-background/60 backdrop-blur-2xl shadow-lg shadow-primary/5 border-b border-white/5' 
+          : 'bg-transparent backdrop-blur-sm'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <button
               onClick={() => router.push('/')}
               className="flex items-center gap-2 hover:opacity-80 transition-all duration-300 group">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-[#4ec9b0]/20 flex items-center justify-center border-2 border-primary/40 shadow-lg group-hover:shadow-primary/40 group-hover:scale-110 transition-all duration-300 animate-pulse-glow">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-[#4ec9b0]/20 flex items-center justify-center border-2 border-primary/40 shadow-lg group-hover:shadow-primary/40 group-hover:scale-110 transition-all duration-300 animate-pulse-glow backdrop-blur-md">
                 <GraduationCap className="w-5 h-5 text-primary group-hover:rotate-12 transition-transform duration-300" />
               </div>
               <span className="text-lg font-bold bg-gradient-to-r from-primary via-[#4ec9b0] to-primary bg-clip-text text-transparent">منصة التعليم المصرية</span>
@@ -141,7 +141,7 @@ function NavbarContent() {
             <div className="flex items-center gap-3">
               {user ? (
                 <>
-                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 shadow-sm animate-scale-in">
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 backdrop-blur-md border border-white/10 shadow-sm animate-scale-in">
                     <User className="w-4 h-4 text-primary" />
                     <span className="text-sm font-medium text-white">{user.name}</span>
                     {hasSubscription && <Crown className="w-4 h-4 text-yellow-500 subscriber-badge" />}
@@ -151,14 +151,14 @@ function NavbarContent() {
                       count={unreadCount}
                       size="sm"
                       onClick={handleNotificationClick}
-                      className="bg-transparent border-white/30 text-white hover:bg-white/10 hover:text-white hover:border-white/50 transition-all"
+                      className="bg-white/5 backdrop-blur-md border-white/10 text-white hover:bg-white/10 hover:text-white hover:border-white/20 transition-all"
                     />
                   )}
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={handleSettingsClick}
-                    className="btn-animate bg-transparent border-white/30 text-white hover:bg-white/10 hover:text-white hover:border-white/50 transition-all">
+                    className="btn-animate bg-white/5 backdrop-blur-md border-white/10 text-white hover:bg-white/10 hover:text-white hover:border-white/20 transition-all">
                     <Settings className="w-4 h-4 ml-2" />
                     الإعدادات
                   </Button>
@@ -169,13 +169,13 @@ function NavbarContent() {
                     variant="outline"
                     size="sm"
                     onClick={() => router.push('/login')}
-                    className="btn-animate bg-transparent border-white/30 text-white hover:bg-white/10 hover:text-white hover:border-white/50 transition-all">
+                    className="btn-animate bg-white/5 backdrop-blur-md border-white/10 text-white hover:bg-white/10 hover:text-white hover:border-white/20 transition-all">
                     تسجيل الدخول
                   </Button>
                   <Button
                     size="sm"
                     onClick={() => router.push('/register')}
-                    className="btn-animate bg-gradient-to-r from-primary to-[#4ec9b0] hover:from-primary/90 hover:to-[#4ec9b0]/90 text-white shadow-lg hover:shadow-xl transition-all">
+                    className="btn-animate bg-gradient-to-r from-primary to-[#4ec9b0] hover:from-primary/90 hover:to-[#4ec9b0]/90 text-white shadow-lg hover:shadow-xl transition-all backdrop-blur-md">
                     إنشاء حساب
                   </Button>
                 </>
@@ -185,24 +185,22 @@ function NavbarContent() {
         </div>
       </nav>
 
-      {/* Spacer for fixed navbar */}
       <div className="hidden md:block h-16" />
 
-      {/* Mobile Top Navbar */}
-      <nav className="md:hidden bg-transparent backdrop-blur-sm border-b border-white/10 sticky top-0 z-50">
+      <nav className="md:hidden bg-background/60 backdrop-blur-2xl border-b border-white/5 sticky top-0 z-50 shadow-lg shadow-primary/5">
         <div className="px-4 py-3">
           <div className="flex items-center justify-between">
             <button
               onClick={() => router.push('/')}
               className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary/30 to-[#4ec9b0]/20 flex items-center justify-center border-2 border-primary/40 shadow-lg animate-pulse-glow">
+              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary/30 to-[#4ec9b0]/20 flex items-center justify-center border-2 border-primary/40 shadow-lg animate-pulse-glow backdrop-blur-md">
                 <GraduationCap className="w-4 h-4 text-primary" />
               </div>
               <span className="text-sm font-bold bg-gradient-to-r from-primary to-[#4ec9b0] bg-clip-text text-transparent">التعليم المصرية</span>
             </button>
 
             {user ? (
-              <div className="flex items-center gap-2 px-2 py-1 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 animate-scale-in">
+              <div className="flex items-center gap-2 px-2 py-1 rounded-lg bg-white/5 backdrop-blur-md border border-white/10 animate-scale-in">
                 <User className="w-3 h-3 text-primary" />
                 <span className="text-xs font-medium text-white">{user.name.split(' ')[0]}</span>
                 {hasSubscription && <Crown className="w-3 h-3 text-yellow-500" />}
@@ -211,7 +209,7 @@ function NavbarContent() {
               <Button
                 size="sm"
                 onClick={() => router.push('/login')}
-                className="btn-animate bg-gradient-to-r from-primary to-[#4ec9b0] text-white text-xs h-8">
+                className="btn-animate bg-gradient-to-r from-primary to-[#4ec9b0] text-white text-xs h-8 backdrop-blur-md">
                 تسجيل الدخول
               </Button>
             )}
@@ -221,7 +219,7 @@ function NavbarContent() {
 
       {!isHomePage && (
         <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 pb-safe">
-          <div className="bg-gradient-to-t from-[#1a1a2e]/98 via-[#16213e]/98 to-[#1a1a2e]/95 backdrop-blur-xl border-t border-white/10 shadow-2xl shadow-black/20">
+          <div className="bg-gradient-to-t from-[#1a1a2e]/95 via-[#16213e]/95 to-[#1a1a2e]/90 backdrop-blur-2xl border-t border-white/5 shadow-2xl shadow-black/10">
             <div className="relative">
               <div className={`grid ${user ? 'grid-cols-3' : 'grid-cols-3'} gap-1 px-2 py-2`}>
                 {user && (
