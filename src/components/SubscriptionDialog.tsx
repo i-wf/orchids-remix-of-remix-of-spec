@@ -71,9 +71,21 @@ export function SubscriptionDialog({
     setLoading(true);
 
     try {
-      // In real app, upload screenshot to storage first
-      // For now, we'll use a placeholder URL
-      const screenshotUrl = 'https://placeholder.com/screenshot.jpg';
+      const uploadFormData = new FormData();
+      uploadFormData.append('file', screenshot);
+      uploadFormData.append('folder', 'payment-screenshots');
+
+      const uploadResponse = await fetch('/api/upload', {
+        method: 'POST',
+        body: uploadFormData,
+      });
+
+      if (!uploadResponse.ok) {
+        throw new Error('فشل رفع الصورة');
+      }
+
+      const uploadData = await uploadResponse.json();
+      const screenshotUrl = uploadData.url;
 
       const response = await fetch('/api/payment-requests', {
         method: 'POST',
