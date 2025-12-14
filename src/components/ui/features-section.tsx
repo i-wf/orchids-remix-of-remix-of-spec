@@ -5,13 +5,13 @@ import { Sparkles, Brain, MessageCircle, Video, FileText, Award } from "lucide-r
 
 export function FeaturesSection() {
   return (
-    <div className="w-full flex items-center justify-center bg-[#1e1e1e] p-4 sm:p-10 py-16">
+    <div className="w-full flex items-center justify-center bg-transparent p-4 sm:p-10 py-16">
       <div className="max-w-7xl w-full">
         <div className="text-center mb-12 animate-in fade-in duration-700">
-          <h2 className="text-3xl md:text-4xl font-light text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-light text-foreground mb-4">
             لماذا تختار منصتنا؟
           </h2>
-          <p className="text-neutral-400 text-lg">
+          <p className="text-muted-foreground text-lg">
             تجربة تعليمية متكاملة بأحدث التقنيات
           </p>
         </div>
