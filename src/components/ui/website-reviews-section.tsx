@@ -66,7 +66,7 @@ export function WebsiteReviewsSection() {
                   className={`w-6 h-6 ${
                     i < Math.round(averageRating)
                       ? 'text-[#007acc] fill-[#007acc]'
-                      : 'text-neutral-600'
+                      : 'text-[#3e3e42]'
                   }`}
                 />
               ))}
@@ -89,10 +89,10 @@ export function WebsiteReviewsSection() {
             >
               <div className="flex items-start justify-between mb-2">
                 <div>
-                  <h3 className="text-foreground font-semibold text-lg mb-1">
+                  <h3 className="text-gray-100 font-semibold text-lg mb-1">
                     {review.studentName}
                   </h3>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-gray-300 text-sm">
                     {review.studentGrade}
                   </p>
                 </div>
@@ -106,19 +106,19 @@ export function WebsiteReviewsSection() {
                     className={`w-4 h-4 ${
                       i < review.rating
                         ? 'text-[#007acc] fill-[#007acc]'
-                        : 'text-neutral-600'
+                        : 'text-[#3e3e42]'
                     }`}
                   />
                 ))}
               </div>
 
               {review.reviewText && (
-                <p className="text-muted-foreground text-sm leading-relaxed flex-1">
+                <p className="text-gray-300 text-sm leading-relaxed flex-1">
                   "{review.reviewText}"
                 </p>
               )}
 
-              <div className="text-xs text-muted-foreground pt-2 border-t border-[#3e3e42]">
+              <div className="text-xs text-gray-400 pt-2 border-t border-[#3e3e42]">
                 {new Date(review.createdAt).toLocaleDateString('ar-EG', {
                   year: 'numeric',
                   month: 'long',
