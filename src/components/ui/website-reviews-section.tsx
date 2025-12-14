@@ -49,7 +49,7 @@ export function WebsiteReviewsSection() {
   const displayedReviews = reviews.slice(0, 6);
 
   return (
-    <div className="w-full flex items-center justify-center bg-gradient-to-br from-[#000] to-[#1A2428] p-4 sm:p-10 py-16">
+    <div className="w-full flex items-center justify-center bg-[#2d2d30] p-4 sm:p-10 py-16">
       <div className="max-w-7xl w-full">
         <div className="text-center mb-12 animate-in fade-in duration-700">
           <h2 className="text-3xl md:text-4xl font-light text-white mb-4">
@@ -65,7 +65,7 @@ export function WebsiteReviewsSection() {
                   key={i}
                   className={`w-6 h-6 ${
                     i < Math.round(averageRating)
-                      ? 'text-yellow-500 fill-yellow-500'
+                      ? 'text-[#007acc] fill-[#007acc]'
                       : 'text-neutral-600'
                   }`}
                 />
@@ -85,13 +85,7 @@ export function WebsiteReviewsSection() {
             <SpotlightCard
               key={review.id}
               className={`p-6 h-full flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-${index * 100}`}
-              spotlightColor={
-                index % 3 === 0 
-                  ? "rgba(14, 165, 233, 0.25)" 
-                  : index % 3 === 1 
-                  ? "rgba(59, 130, 246, 0.25)" 
-                  : "rgba(96, 165, 250, 0.25)"
-              }
+              spotlightColor="rgba(0, 122, 204, 0.15)"
             >
               <div className="flex items-start justify-between mb-2">
                 <div>
@@ -102,7 +96,7 @@ export function WebsiteReviewsSection() {
                     {review.studentGrade}
                   </p>
                 </div>
-                <Quote className="w-8 h-8 text-blue-400/30" />
+                <Quote className="w-8 h-8 text-[#007acc]/30" />
               </div>
 
               <div className="flex items-center gap-1 mb-2">
@@ -111,7 +105,7 @@ export function WebsiteReviewsSection() {
                     key={i}
                     className={`w-4 h-4 ${
                       i < review.rating
-                        ? 'text-yellow-500 fill-yellow-500'
+                        ? 'text-[#007acc] fill-[#007acc]'
                         : 'text-neutral-600'
                     }`}
                   />
@@ -124,7 +118,7 @@ export function WebsiteReviewsSection() {
                 </p>
               )}
 
-              <div className="text-xs text-neutral-500 pt-2 border-t border-neutral-700/50">
+              <div className="text-xs text-neutral-500 pt-2 border-t border-[#3e3e42]">
                 {new Date(review.createdAt).toLocaleDateString('ar-EG', {
                   year: 'numeric',
                   month: 'long',
