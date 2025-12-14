@@ -28,16 +28,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      <div 
-        className="fixed inset-0 opacity-30 pointer-events-none"
-        style={{
-          background: 'radial-gradient(circle at 20% 50%, rgba(0, 122, 204, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(78, 201, 176, 0.2) 0%, transparent 50%)',
-          backgroundSize: '200% 200%',
-          animation: 'gradient-shift 8s ease infinite'
-        }}
-      />
-      
+    <div className="min-h-screen relative overflow-hidden">        
       <div className="relative min-h-screen flex items-center justify-center py-16 px-4">
         <div 
           className="absolute inset-0 overflow-hidden"
