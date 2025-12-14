@@ -30,16 +30,18 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background page-fade-in">
-      <div className="relative min-h-screen flex items-center justify-center py-12">
-        <EtheralShadow
-          color="rgba(64, 96, 144, 0.5)"
-          animation={{ scale: 100, speed: 90 }}
-          noise={{ opacity: 1, scale: 1.2 }}
-          sizing="fill"
-          className="absolute inset-0"
-        />
-        <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-6xl mx-auto w-full">
-          <div className="mb-3 bg-primary/10 hover:bg-primary/15 text-primary backdrop-blur-md border border-primary/20 uppercase tracking-wider font-medium flex items-center gap-2 px-4 py-1.5 rounded-full">
+      <div className="relative min-h-screen flex items-center justify-center py-16 px-4">
+        <div className="absolute inset-0 animate-in fade-in duration-1000">
+          <EtheralShadow
+            color="rgba(64, 96, 144, 0.5)"
+            animation={{ scale: 100, speed: 90 }}
+            noise={{ opacity: 1, scale: 1.2 }}
+            sizing="fill"
+            className="w-full h-full"
+          />
+        </div>
+        <div className="relative z-10 flex flex-col items-center justify-center text-center w-full max-w-4xl mx-auto space-y-6">
+          <div className="mb-2 bg-primary/10 hover:bg-primary/15 text-primary backdrop-blur-md border border-primary/20 uppercase tracking-wider font-medium flex items-center gap-2 px-4 py-1.5 rounded-full mx-auto">
             <span className="text-[10px] font-light tracking-[0.18em] text-primary/80">
               تعليم
             </span>
@@ -49,15 +51,15 @@ export default function Home() {
             </span>
           </div>
           
-          <h1 className="text-5xl md:text-7xl max-w-4xl mx-auto font-light tracking-tight text-foreground mb-2">
+          <h1 className="text-5xl md:text-7xl font-light tracking-tight text-foreground text-center w-full">
             منصة التعليم المصرية
           </h1>
           
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-6 font-light">
+          <p className="text-muted-foreground text-lg font-light text-center w-full max-w-2xl mx-auto">
             منصة تعليمية متكاملة مدعومة بالذكاء الاصطناعي - من الصف الرابع الابتدائي إلى الثالث الثانوي
           </p>
           
-          <div className="flex flex-wrap items-center justify-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-3 w-full">
             <Button
               size="lg"
               onClick={() => router.push('/register')}
@@ -73,7 +75,7 @@ export default function Home() {
             </Button>
           </div>
           
-          <ul className="mt-4 flex flex-wrap justify-center gap-6 text-xs font-light tracking-tight text-muted-foreground">
+          <ul className="flex flex-wrap justify-center gap-6 text-xs font-light tracking-tight text-muted-foreground w-full">
             <li className="flex items-center gap-2">
               <span className="h-1 w-1 rounded-full bg-primary/60" />
               دروس تفاعلية
