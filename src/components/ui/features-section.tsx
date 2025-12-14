@@ -22,12 +22,12 @@ export function FeaturesSection() {
             className="p-6 h-full flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700" 
             spotlightColor="rgba(0, 122, 204, 0.15)"
           >
-            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-[#007acc]/10 border border-[#007acc]/30">
+            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-[#1e1e1e] border border-[#007acc]/30">
               <Brain className="text-[#007acc] h-6 w-6" />
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-white mb-2">ذكاء اصطناعي متقدم</h3>
-              <p className="text-sm text-neutral-400">
+              <h3 className="text-xl font-semibold text-gray-100 mb-2">ذكاء اصطناعي متقدم</h3>
+              <p className="text-sm text-gray-300">
                 مساعد ذكي يجيب على أسئلتك ويشرح المفاهيم الصعبة بطريقة سهلة ومبسطة.
               </p>
             </div>
@@ -37,12 +37,12 @@ export function FeaturesSection() {
             className="p-6 h-full flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100" 
             spotlightColor="rgba(0, 122, 204, 0.15)"
           >
-            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-[#007acc]/10 border border-[#007acc]/30">
+            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-[#1e1e1e] border border-[#007acc]/30">
               <Video className="text-[#007acc] h-6 w-6" />
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-white mb-2">دروس فيديو تفاعلية</h3>
-              <p className="text-sm text-neutral-400">
+              <h3 className="text-xl font-semibold text-gray-100 mb-2">دروس فيديو تفاعلية</h3>
+              <p className="text-sm text-gray-300">
                 مكتبة شاملة من الدروس المصورة بجودة عالية مع شروحات واضحة ومفصلة.
               </p>
             </div>
@@ -52,12 +52,12 @@ export function FeaturesSection() {
             className="p-6 h-full flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200" 
             spotlightColor="rgba(0, 122, 204, 0.15)"
           >
-            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-[#007acc]/10 border border-[#007acc]/30">
+            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-[#1e1e1e] border border-[#007acc]/30">
               <FileText className="text-[#007acc] h-6 w-6" />
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-white mb-2">ملخصات ذكية</h3>
-              <p className="text-sm text-neutral-400">
+              <h3 className="text-xl font-semibold text-gray-100 mb-2">ملخصات ذكية</h3>
+              <p className="text-sm text-gray-300">
                 الذكاء الاصطناعي يلخص الدروس في نقاط مركزة لمراجعة سريعة وفعالة.
               </p>
             </div>
@@ -67,12 +67,12 @@ export function FeaturesSection() {
             className="p-6 h-full flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300" 
             spotlightColor="rgba(0, 122, 204, 0.15)"
           >
-            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-[#007acc]/10 border border-[#007acc]/30">
+            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-[#1e1e1e] border border-[#007acc]/30">
               <MessageCircle className="text-[#007acc] h-6 w-6" />
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-white mb-2">دعم فوري</h3>
-              <p className="text-sm text-neutral-400">
+              <h3 className="text-xl font-semibold text-gray-100 mb-2">دعم فوري</h3>
+              <p className="text-sm text-gray-300">
                 تواصل مع المدرسين مباشرة واحصل على إجابات لأسئلتك في أي وقت.
               </p>
             </div>
@@ -82,12 +82,12 @@ export function FeaturesSection() {
             className="p-6 h-full flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-400" 
             spotlightColor="rgba(0, 122, 204, 0.15)"
           >
-            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-[#007acc]/10 border border-[#007acc]/30">
+            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-[#1e1e1e] border border-[#007acc]/30">
               <Award className="text-[#007acc] h-6 w-6" />
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-white mb-2">امتحانات ومتابعة</h3>
-              <p className="text-sm text-neutral-400">
+              <h3 className="text-xl font-semibold text-gray-100 mb-2">امتحانات ومتابعة</h3>
+              <p className="text-sm text-gray-300">
                 اختبر نفسك وتابع تقدمك مع تقارير مفصلة عن أدائك الدراسي.
               </p>
             </div>
@@ -97,12 +97,12 @@ export function FeaturesSection() {
             className="p-6 h-full flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500" 
             spotlightColor="rgba(0, 122, 204, 0.15)"
           >
-            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-[#007acc]/10 border border-[#007acc]/30">
+            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-[#1e1e1e] border border-[#007acc]/30">
               <Sparkles className="text-[#007acc] h-6 w-6" />
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-white mb-2">تجربة سلسة</h3>
-              <p className="text-sm text-neutral-400">
+              <h3 className="text-xl font-semibold text-gray-100 mb-2">تجربة سلسة</h3>
+              <p className="text-sm text-gray-300">
                 واجهة حديثة وسهلة الاستخدام تجعل التعلم أكثر متعة وفعالية.
               </p>
             </div>

@@ -119,7 +119,7 @@ export function TopTeachersSpotlight() {
                       className="w-16 h-16 rounded-full object-cover border-2 border-[#007acc]/30 group-hover:border-[#007acc]/50 transition-all"
                     />
                   ) : (
-                    <div className="w-16 h-16 rounded-full bg-[#007acc]/10 flex items-center justify-center border-2 border-[#007acc]/40">
+                    <div className="w-16 h-16 rounded-full bg-[#1e1e1e] flex items-center justify-center border-2 border-[#007acc]/40">
                       <GraduationCap className="w-8 h-8 text-[#007acc]" />
                     </div>
                   )}
@@ -129,10 +129,10 @@ export function TopTeachersSpotlight() {
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-white mb-1 group-hover:text-[#007acc] transition-colors text-lg">
+                  <h3 className="font-semibold text-gray-100 mb-1 group-hover:text-[#007acc] transition-colors text-lg">
                     {teacher.name}
                   </h3>
-                  <p className="text-sm text-neutral-400 mb-2 truncate">
+                  <p className="text-sm text-gray-300 mb-2 truncate">
                     {teacher.subjects}
                   </p>
                   <div className="flex items-center gap-1">
@@ -142,18 +142,18 @@ export function TopTeachersSpotlight() {
                         className={`w-4 h-4 ${
                           i < Math.round(teacher.rating)
                             ? 'text-[#007acc] fill-[#007acc]'
-                            : 'text-neutral-600'
+                            : 'text-[#3e3e42]'
                         }`}
                       />
                     ))}
-                    <span className="text-sm text-neutral-400 mr-2">
+                    <span className="text-sm text-gray-300 mr-2">
                       ({teacher.rating.toFixed(1)})
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-sm text-neutral-400 border-t border-[#3e3e42] pt-4 mt-2">
+              <div className="flex items-center justify-between text-sm text-gray-300 border-t border-[#3e3e42] pt-4 mt-2">
                 <div className="flex items-center gap-1">
                   <Users className="w-4 h-4" />
                   <span>{teacher.studentCount} طالب</span>
@@ -165,7 +165,7 @@ export function TopTeachersSpotlight() {
               </div>
 
               <Button
-                className="w-full mt-2 bg-[#007acc]/20 hover:bg-[#007acc] text-[#007acc] hover:text-white transition-all border border-[#007acc]/50"
+                className="w-full mt-2 bg-[#1e1e1e] hover:bg-[#007acc] text-[#007acc] hover:text-white transition-all border border-[#007acc]/50"
                 onClick={(e) => {
                   e.stopPropagation();
                   router.push(`/dashboard?view=teacher-profile&teacherId=${teacher.id}`);

@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Shape, ExtrudeGeometry } from 'three';
 
-const Box = ({ position, rotation }: { position: [number, number, number], rotation: [number, number, number] }) => {
+const Box = ({ position, rotation, colorIndex }: { position: [number, number, number], rotation: [number, number, number], colorIndex: number }) => {
     const shape = new Shape();
     const angleStep = Math.PI * 0.5;
     const radius = 1;
@@ -24,6 +24,9 @@ const Box = ({ position, rotation }: { position: [number, number, number], rotat
     const geometry = new ExtrudeGeometry(shape, extrudeSettings);
     geometry.center();
 
+    const colors = ["#007acc", "#3e3e42", "#2d2d30", "#252526", "#1e1e1e"];
+    const color = colors[colorIndex % colors.length];
+
     return (
         <mesh
             geometry={geometry}
@@ -31,10 +34,10 @@ const Box = ({ position, rotation }: { position: [number, number, number], rotat
             rotation={rotation}
         >
             <meshPhysicalMaterial 
-                color="#007acc"
-                metalness={1}
-                roughness={0.3}
-                reflectivity={0.5}
+                color={color}
+                metalness={0.8}
+                roughness={0.4}
+                reflectivity={0.4}
                 ior={1.5}
                 emissive="#000000"
                 emissiveIntensity={0}
@@ -42,14 +45,14 @@ const Box = ({ position, rotation }: { position: [number, number, number], rotat
                 opacity={1.0}
                 transmission={0.0}
                 thickness={0.5}
-                clearcoat={0.0}
-                clearcoatRoughness={0.0}
+                clearcoat={0.1}
+                clearcoatRoughness={0.2}
                 sheen={0}
                 sheenRoughness={1.0}
                 sheenColor="#ffffff"
-                specularIntensity={1.0}
+                specularIntensity={0.8}
                 specularColor="#ffffff"
-                iridescence={1}
+                iridescence={0.5}
                 iridescenceIOR={1.3}
                 iridescenceThicknessRange={[100, 400]}
                 flatShading={false}
@@ -83,11 +86,12 @@ const AnimatedBoxes = () => {
 
     return (
         <group ref={groupRef}>
-            {boxes.map((box) => (
+            {boxes.map((box, index) => (
                 <Box
                     key={box.id}
                     position={box.position}
                     rotation={box.rotation}
+                    colorIndex={index}
                 />
             ))}
         </group>
