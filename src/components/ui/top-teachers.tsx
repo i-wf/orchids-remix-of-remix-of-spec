@@ -91,9 +91,9 @@ export function TopTeachers() {
   }
 
   return (
-    <div className="py-20 bg-background/50 backdrop-blur-sm">
+    <div className="py-8 bg-background/50 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 animate-in fade-in duration-700">
           <h2 className="text-3xl md:text-4xl font-light text-foreground mb-2">
             أبرز المدرسين
           </h2>
@@ -102,7 +102,7 @@ export function TopTeachers() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in duration-700 delay-200">
           {teachers.map((teacher) => (
             <Card
               key={teacher.id}

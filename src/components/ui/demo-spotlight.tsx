@@ -3,10 +3,10 @@ import { Layers, ShieldCheck, Zap } from "lucide-react";
 
 export default function DemoSpotlight() {
   return (
-    <div className="min-h-[500px] w-full flex items-center justify-center bg-background p-4 sm:p-10">
+    <div className="w-full flex items-center justify-center bg-background p-4 sm:p-10 py-8">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3 max-w-5xl w-full">
         
-        <SpotlightCard className="p-6 h-full flex flex-col gap-4">
+        <SpotlightCard className="p-6 h-full flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
           <div className="h-10 w-10 flex items-center justify-center rounded-lg bg-card border border-border">
             <Layers className="text-primary h-5 w-5" />
           </div>
@@ -18,7 +18,7 @@ export default function DemoSpotlight() {
           </div>
         </SpotlightCard>
 
-        <SpotlightCard className="p-6 h-full flex flex-col gap-4" spotlightColor="rgba(14, 165, 233, 0.25)">
+        <SpotlightCard className="p-6 h-full flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100" spotlightColor="rgba(14, 165, 233, 0.25)">
           <div className="h-10 w-10 flex items-center justify-center rounded-lg bg-sky-900/20 border border-sky-800/50">
             <ShieldCheck className="text-sky-400 h-5 w-5" />
           </div>
@@ -30,7 +30,7 @@ export default function DemoSpotlight() {
           </div>
         </SpotlightCard>
 
-        <SpotlightCard className="p-6 h-full flex flex-col gap-4" spotlightColor="rgba(168, 85, 247, 0.25)">
+        <SpotlightCard className="p-6 h-full flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200" spotlightColor="rgba(168, 85, 247, 0.25)">
           <div className="h-10 w-10 flex items-center justify-center rounded-lg bg-purple-900/20 border border-purple-800/50">
             <Zap className="text-purple-400 h-5 w-5" />
           </div>
