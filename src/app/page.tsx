@@ -28,7 +28,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden">
       <div 
         className="fixed inset-0 opacity-30 pointer-events-none"
         style={{
