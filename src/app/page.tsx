@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 import { DemoOne } from '@/components/ui/demo-hero';
 import { FeaturesSection } from '@/components/ui/features-section';
 import { TopTeachersSpotlight } from '@/components/ui/top-teachers-spotlight';
+import { WebsiteReviewsSection } from '@/components/ui/website-reviews-section';
+import { RatingPopup } from '@/components/ui/rating-popup';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,7 +29,9 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden">        
+    <div className="min-h-screen relative overflow-hidden">
+      <RatingPopup />
+              
       <div className="relative min-h-screen flex items-center justify-center py-16 px-4">
         <DemoOne />
 
@@ -86,6 +90,7 @@ export default function Home() {
       <div className="relative space-y-0">
         <TopTeachersSpotlight />
         <FeaturesSection />
+        <WebsiteReviewsSection />
       </div>
     </div>
   );
