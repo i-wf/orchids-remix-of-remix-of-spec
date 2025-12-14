@@ -312,3 +312,13 @@ export const payments = sqliteTable('payments', {
   createdAt: text('created_at').notNull(),
   updatedAt: text('updated_at').notNull(),
 });
+
+export const websiteReviews = sqliteTable('website_reviews', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  userId: integer('user_id').notNull().references(() => users.id),
+  rating: integer('rating').notNull(), // 1-5
+  reviewText: text('review_text'),
+  studentName: text('student_name').notNull(),
+  studentGrade: text('student_grade').notNull(),
+  createdAt: text('created_at').notNull(),
+});
