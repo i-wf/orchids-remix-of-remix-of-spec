@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { DemoOne } from '@/components/ui/demo-hero';
-import DemoSpotlight from '@/components/ui/demo-spotlight';
-import { TopTeachers } from '@/components/ui/top-teachers';
+import { FeaturesSection } from '@/components/ui/features-section';
+import { TopTeachersSpotlight } from '@/components/ui/top-teachers-spotlight';
 
 export const dynamic = 'force-dynamic';
 
@@ -84,8 +84,8 @@ export default function Home() {
       </div>
 
       <div className="relative space-y-0">
-        <TopTeachers />
-        <DemoSpotlight />
+        <TopTeachersSpotlight />
+        <FeaturesSection />
       </div>
     </div>
   );
