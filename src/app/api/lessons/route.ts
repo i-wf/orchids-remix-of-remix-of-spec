@@ -222,7 +222,38 @@ export async function POST(request: NextRequest) {
       })
       .returning();
 
-    return NextResponse.json(newLesson[0], { status: 201 });
+    const createdLesson = newLesson[0];
+
+    if (!isFree) {
+      const { subscriptions, notifications } = await import('@/db/schema');
+      
+      const folderSubscriptions = await db
+        .select()
+        .from(subscriptions)
+        .where(
+          and(
+            eq(subscriptions.folderId, parseInt(folderId)),
+            eq(subscriptions.isActive, true)
+          )
+        );
+
+      if (folderSubscriptions.length > 0) {
+        const notificationPromises = folderSubscriptions.map(async (sub) => {
+          return db.insert(notifications).values({
+            studentId: sub.studentId,
+            lessonId: createdLesson.id,
+            notificationType: 'new_lesson',
+            message: `حصة جديدة: ${title.trim()} في ${folder[0].name}`,
+            isRead: false,
+            createdAt: new Date().toISOString(),
+          });
+        });
+
+        await Promise.all(notificationPromises);
+      }
+    }
+
+    return NextResponse.json(createdLesson, { status: 201 });
   } catch (error) {
     console.error('POST error:', error);
     return NextResponse.json(
