@@ -82,11 +82,11 @@ export default function Home() {
         </div>
       </div>
 
-      <TopTeachers />
-
-      <DemoOne />
-      
-      <DemoSpotlight />
+      <div className="space-y-0">
+        <TopTeachers />
+        <DemoOne />
+        <DemoSpotlight />
+      </div>
     </div>);
 
 }
