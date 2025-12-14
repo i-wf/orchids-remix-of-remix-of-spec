@@ -49,13 +49,13 @@ export function WebsiteReviewsSection() {
   const displayedReviews = reviews.slice(0, 6);
 
   return (
-    <div className="w-full flex items-center justify-center bg-[#2d2d30] p-4 sm:p-10 py-16">
+    <div className="w-full flex items-center justify-center bg-transparent p-4 sm:p-10 py-16">
       <div className="max-w-7xl w-full">
         <div className="text-center mb-12 animate-in fade-in duration-700">
-          <h2 className="text-3xl md:text-4xl font-light text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-light text-foreground mb-4">
             آراء طلابنا
           </h2>
-          <p className="text-neutral-400 text-lg mb-4">
+          <p className="text-muted-foreground text-lg mb-4">
             تقييمات حقيقية من طلاب المنصة
           </p>
           <div className="flex items-center justify-center gap-2">
@@ -71,10 +71,10 @@ export function WebsiteReviewsSection() {
                 />
               ))}
             </div>
-            <span className="text-white text-xl font-semibold">
+            <span className="text-foreground text-xl font-semibold">
               {averageRating.toFixed(1)}
             </span>
-            <span className="text-neutral-400">
+            <span className="text-muted-foreground">
               ({reviews.length} تقييم)
             </span>
           </div>
@@ -89,10 +89,10 @@ export function WebsiteReviewsSection() {
             >
               <div className="flex items-start justify-between mb-2">
                 <div>
-                  <h3 className="text-white font-semibold text-lg mb-1">
+                  <h3 className="text-foreground font-semibold text-lg mb-1">
                     {review.studentName}
                   </h3>
-                  <p className="text-neutral-400 text-sm">
+                  <p className="text-muted-foreground text-sm">
                     {review.studentGrade}
                   </p>
                 </div>
@@ -113,12 +113,12 @@ export function WebsiteReviewsSection() {
               </div>
 
               {review.reviewText && (
-                <p className="text-neutral-300 text-sm leading-relaxed flex-1">
+                <p className="text-muted-foreground text-sm leading-relaxed flex-1">
                   "{review.reviewText}"
                 </p>
               )}
 
-              <div className="text-xs text-neutral-500 pt-2 border-t border-[#3e3e42]">
+              <div className="text-xs text-muted-foreground pt-2 border-t border-[#3e3e42]">
                 {new Date(review.createdAt).toLocaleDateString('ar-EG', {
                   year: 'numeric',
                   month: 'long',
