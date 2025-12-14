@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { Component as EtheralShadow } from '@/components/ui/etheral-shadow';
 import { DemoOne } from '@/components/ui/demo-hero';
 import DemoSpotlight from '@/components/ui/demo-spotlight';
+import { TopTeachers } from '@/components/ui/top-teachers';
 
 export const dynamic = 'force-dynamic';
 
@@ -24,14 +25,7 @@ export default function Home() {
   }, [user, loading, router]);
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="flex flex-col items-center gap-4">
-          <Loader2 className="w-8 h-8 animate-spin text-primary" />
-          <p className="text-sm text-muted-foreground animate-pulse">جاري التحميل...</p>
-        </div>
-      </div>);
-
+    return null;
   }
 
   return (
@@ -95,6 +89,8 @@ export default function Home() {
           </ul>
         </div>
       </div>
+
+      <TopTeachers />
 
       <DemoOne />
       
