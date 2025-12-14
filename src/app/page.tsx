@@ -36,8 +36,8 @@ export default function Home() {
         <DemoOne />
 
         <div className="relative z-10 flex flex-col items-center justify-center text-center w-full max-w-4xl mx-auto space-y-6 animate-in fade-in duration-1000">
-          <div className="backdrop-blur-xl bg-black/20 border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl">
-            <div className="mb-2 bg-primary/10 hover:bg-primary/15 text-primary backdrop-blur-md border border-primary/20 uppercase tracking-wider font-medium flex items-center gap-2 px-4 py-1.5 rounded-full mx-auto animate-in fade-in duration-500 delay-100 w-fit">
+          <div className="backdrop-blur-sm bg-black/20 border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl">
+            <div className="mb-2 bg-primary/10 hover:bg-primary/15 text-primary backdrop-blur-sm border border-primary/20 uppercase tracking-wider font-medium flex items-center gap-2 px-4 py-1.5 rounded-full mx-auto animate-in fade-in duration-500 delay-100 w-fit">
               <span className="text-[10px] font-light tracking-[0.18em] text-primary/80">
                 تعليم
               </span>
@@ -59,14 +59,14 @@ export default function Home() {
               <Button
                 size="lg"
                 onClick={() => router.push('/register')}
-                className="px-8 py-3 rounded-xl text-base font-medium backdrop-blur-lg bg-primary hover:bg-primary/90 shadow-lg transition-all cursor-pointer">
+                className="px-8 py-3 rounded-xl text-base font-medium backdrop-blur-sm bg-primary hover:bg-primary/90 shadow-lg transition-all cursor-pointer">
                 انضم معنا
               </Button>
               <Button
                 size="lg"
                 variant="outline"
                 onClick={() => router.push('/login')}
-                className="px-8 py-3 rounded-xl text-base font-medium border-muted-foreground/30 text-foreground hover:bg-muted backdrop-blur-lg transition-all cursor-pointer">
+                className="px-8 py-3 rounded-xl text-base font-medium border-muted-foreground/30 text-foreground hover:bg-muted backdrop-blur-sm transition-all cursor-pointer">
                 سجل دخولك
               </Button>
             </div>
