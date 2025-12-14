@@ -5,7 +5,7 @@ import { Sparkles, Brain, MessageCircle, Video, FileText, Award } from "lucide-r
 
 export function FeaturesSection() {
   return (
-    <div className="w-full flex items-center justify-center bg-gradient-to-br from-[#000] to-[#1A2428] p-4 sm:p-10 py-16">
+    <div className="w-full flex items-center justify-center bg-[#1e1e1e] p-4 sm:p-10 py-16">
       <div className="max-w-7xl w-full">
         <div className="text-center mb-12 animate-in fade-in duration-700">
           <h2 className="text-3xl md:text-4xl font-light text-white mb-4">
@@ -20,10 +20,10 @@ export function FeaturesSection() {
           
           <SpotlightCard 
             className="p-6 h-full flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700" 
-            spotlightColor="rgba(14, 165, 233, 0.25)"
+            spotlightColor="rgba(0, 122, 204, 0.15)"
           >
-            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-blue-900/20 border border-blue-800/50">
-              <Brain className="text-blue-400 h-6 w-6" />
+            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-[#007acc]/10 border border-[#007acc]/30">
+              <Brain className="text-[#007acc] h-6 w-6" />
             </div>
             <div>
               <h3 className="text-xl font-semibold text-white mb-2">ذكاء اصطناعي متقدم</h3>
@@ -35,10 +35,10 @@ export function FeaturesSection() {
 
           <SpotlightCard 
             className="p-6 h-full flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100" 
-            spotlightColor="rgba(59, 130, 246, 0.25)"
+            spotlightColor="rgba(0, 122, 204, 0.15)"
           >
-            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-blue-800/20 border border-blue-700/50">
-              <Video className="text-blue-300 h-6 w-6" />
+            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-[#007acc]/10 border border-[#007acc]/30">
+              <Video className="text-[#007acc] h-6 w-6" />
             </div>
             <div>
               <h3 className="text-xl font-semibold text-white mb-2">دروس فيديو تفاعلية</h3>
@@ -50,10 +50,10 @@ export function FeaturesSection() {
 
           <SpotlightCard 
             className="p-6 h-full flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200" 
-            spotlightColor="rgba(96, 165, 250, 0.25)"
+            spotlightColor="rgba(0, 122, 204, 0.15)"
           >
-            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-blue-700/20 border border-blue-600/50">
-              <FileText className="text-blue-200 h-6 w-6" />
+            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-[#007acc]/10 border border-[#007acc]/30">
+              <FileText className="text-[#007acc] h-6 w-6" />
             </div>
             <div>
               <h3 className="text-xl font-semibold text-white mb-2">ملخصات ذكية</h3>
@@ -65,10 +65,10 @@ export function FeaturesSection() {
 
           <SpotlightCard 
             className="p-6 h-full flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300" 
-            spotlightColor="rgba(14, 165, 233, 0.25)"
+            spotlightColor="rgba(0, 122, 204, 0.15)"
           >
-            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-blue-900/20 border border-blue-800/50">
-              <MessageCircle className="text-blue-400 h-6 w-6" />
+            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-[#007acc]/10 border border-[#007acc]/30">
+              <MessageCircle className="text-[#007acc] h-6 w-6" />
             </div>
             <div>
               <h3 className="text-xl font-semibold text-white mb-2">دعم فوري</h3>
@@ -80,10 +80,10 @@ export function FeaturesSection() {
 
           <SpotlightCard 
             className="p-6 h-full flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-400" 
-            spotlightColor="rgba(59, 130, 246, 0.25)"
+            spotlightColor="rgba(0, 122, 204, 0.15)"
           >
-            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-blue-800/20 border border-blue-700/50">
-              <Award className="text-blue-300 h-6 w-6" />
+            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-[#007acc]/10 border border-[#007acc]/30">
+              <Award className="text-[#007acc] h-6 w-6" />
             </div>
             <div>
               <h3 className="text-xl font-semibold text-white mb-2">امتحانات ومتابعة</h3>
@@ -95,10 +95,10 @@ export function FeaturesSection() {
 
           <SpotlightCard 
             className="p-6 h-full flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500" 
-            spotlightColor="rgba(96, 165, 250, 0.25)"
+            spotlightColor="rgba(0, 122, 204, 0.15)"
           >
-            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-blue-700/20 border border-blue-600/50">
-              <Sparkles className="text-blue-200 h-6 w-6" />
+            <div className="h-12 w-12 flex items-center justify-center rounded-lg bg-[#007acc]/10 border border-[#007acc]/30">
+              <Sparkles className="text-[#007acc] h-6 w-6" />
             </div>
             <div>
               <h3 className="text-xl font-semibold text-white mb-2">تجربة سلسة</h3>
