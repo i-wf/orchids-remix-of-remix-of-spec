@@ -28,17 +28,17 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      <div 
+        className="fixed inset-0 opacity-30 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle at 20% 50%, rgba(0, 122, 204, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(78, 201, 176, 0.2) 0%, transparent 50%)',
+          backgroundSize: '200% 200%',
+          animation: 'gradient-shift 8s ease infinite'
+        }}
+      />
+      
       <div className="relative min-h-screen flex items-center justify-center py-16 px-4">
-        <div 
-          className="absolute inset-0 opacity-30 animate-gradient-shift"
-          style={{
-            background: 'radial-gradient(circle at 20% 50%, rgba(0, 122, 204, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(78, 201, 176, 0.2) 0%, transparent 50%)',
-            backgroundSize: '200% 200%',
-            animation: 'gradient-shift 8s ease infinite'
-          }}
-        />
-        
         <div className="relative z-10 flex flex-col items-center justify-center text-center w-full max-w-4xl mx-auto space-y-6 animate-in fade-in duration-1000">
           <div className="mb-2 bg-primary/10 hover:bg-primary/15 text-primary backdrop-blur-md border border-primary/20 uppercase tracking-wider font-medium flex items-center gap-2 px-4 py-1.5 rounded-full mx-auto animate-in fade-in duration-500 delay-100">
             <span className="text-[10px] font-light tracking-[0.18em] text-primary/80">
@@ -91,7 +91,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="space-y-0">
+      <div className="relative space-y-0">
         <TopTeachers />
         <DemoOne />
         <DemoSpotlight />
