@@ -2,7 +2,6 @@
 
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
-import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { DemoOne } from '@/components/ui/demo-hero';
@@ -30,35 +29,7 @@ export default function Home() {
   return (
     <div className="min-h-screen relative overflow-hidden">        
       <div className="relative min-h-screen flex items-center justify-center py-16 px-4">
-        <div 
-          className="absolute inset-0 overflow-hidden"
-          style={{
-            perspective: '1200px',
-            perspectiveOrigin: 'center center'
-          }}
-        >
-          {[...Array(12)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute rounded-2xl border border-primary/20 backdrop-blur-sm"
-              style={{
-                width: '280px',
-                height: '380px',
-                left: `${15 + (i % 4) * 20}%`,
-                top: `${10 + Math.floor(i / 4) * 25}%`,
-                background: `linear-gradient(135deg, 
-                  rgba(0, 122, 204, ${0.05 + (i * 0.01)}) 0%, 
-                  rgba(78, 201, 176, ${0.03 + (i * 0.01)}) 50%,
-                  rgba(0, 0, 0, 0.1) 100%)`,
-                transform: `rotateY(${i * 3}deg) rotateX(${i * 2}deg) translateZ(${-100 + i * 15}px)`,
-                animation: `float-cards ${8 + i * 0.5}s ease-in-out infinite`,
-                animationDelay: `${i * 0.2}s`,
-                boxShadow: `0 20px 60px rgba(0, 122, 204, ${0.1 + (i * 0.01)})`,
-                opacity: 0.6 - (i * 0.03)
-              }}
-            />
-          ))}
-        </div>
+        <DemoOne />
 
         <div className="relative z-10 flex flex-col items-center justify-center text-center w-full max-w-4xl mx-auto space-y-6 animate-in fade-in duration-1000">
           <div className="mb-2 bg-primary/10 hover:bg-primary/15 text-primary backdrop-blur-md border border-primary/20 uppercase tracking-wider font-medium flex items-center gap-2 px-4 py-1.5 rounded-full mx-auto animate-in fade-in duration-500 delay-100">
@@ -114,20 +85,8 @@ export default function Home() {
 
       <div className="relative space-y-0">
         <TopTeachers />
-        <DemoOne />
         <DemoSpotlight />
       </div>
-
-      <style jsx>{`
-        @keyframes float-cards {
-          0%, 100% {
-            transform: rotateY(var(--rotate-y, 0deg)) rotateX(var(--rotate-x, 0deg)) translateZ(var(--translate-z, 0px)) translateY(0px);
-          }
-          50% {
-            transform: rotateY(var(--rotate-y, 0deg)) rotateX(var(--rotate-x, 0deg)) translateZ(var(--translate-z, 0px)) translateY(-20px);
-          }
-        }
-      `}</style>
     </div>
   );
 }
